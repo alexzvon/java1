@@ -19,12 +19,12 @@ public class CyclesGoldenFibo {
     }
 
     public static boolean containsDigit(int number, int digit) {
-        String str = String.valueOf(digit);
+        String str = String.valueOf(number);
         boolean result = false;
 
         int k = 10;
         for (int i = 0; i < str.length(); i++) {
-            if(number == (digit % k) / (k / 10)) {
+            if(digit == (number % k) / (k / 10)) {
                 result = true;
                 break;
             }
