@@ -8,6 +8,34 @@ public class Task2 {
         addition(528, 387);
         multiplication(124, 87);
         multiplication(1528, 3);
+
+        System.out.println(addAsStrings(1,2));
+        System.out.println(addAsStrings(2,1));
+
+
+
+
+    }
+
+    static int addAsStrings(int n1, int n2) {
+        String s1 = String.valueOf(n1);
+        String s2 = String.valueOf(n2);
+
+        String s = s1 + s2;
+        Integer n = Integer.valueOf(s);
+
+        return n.intValue();
+    }
+
+    static long factorial(long n) {
+        long factorial = 1L;
+
+        for (int i = 0; i < n + 1; i++) {
+            if(0 == i) continue;
+            factorial *= i;
+        }
+
+        return factorial;
     }
 
     public static void printJava()
@@ -27,6 +55,29 @@ public class Task2 {
         System.out.print(value2);
         System.out.print(value3);
         System.out.println(value1);
+    }
+
+    public static String textGrade(int grade) {
+        final String ZERO = "не оценено";
+        final String D1_20 = "очень плохо";
+        final String D21_40 = "плохо";
+        final String D41_60 = "удовлетворительно";
+        final String D61_80 = "хорошо";
+        final String D81_100 = "отлично";
+        final String INFINITY = "не определено";
+
+        String result = "";
+
+        if (0 == grade) result = ZERO;
+        else if (1 <= grade && 20 >= grade) result = D1_20;
+        else if (21 <= grade && 40 >= grade) result = D21_40;
+        else if (41 <= grade && 60 >= grade) result = D41_60;
+        else if (61 <= grade && 80 >= grade) result = D61_80;
+        else if (81 <= grade && 100 >= grade) result = D81_100;
+        else result = INFINITY;
+
+        return result;
+
     }
 
     public static int subtraction(int x, int y)
