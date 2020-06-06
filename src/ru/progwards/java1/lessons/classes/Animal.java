@@ -5,10 +5,6 @@ public class Animal {
     enum AnimalKind { ANIMAL, COW, HAMSTER, DUCK };
     enum FoodKind { UNKNOWN, HAY, CORN };
 
-    public Animal() {
-        //
-    }
-
     public Animal(double weight) {
         this.weight = weight;
     }
