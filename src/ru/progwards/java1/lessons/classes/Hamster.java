@@ -3,13 +3,13 @@ package ru.progwards.java1.lessons.classes;
 public class Hamster extends Animal {
 
     @Override
-    public Animal.AnimalKind getKind() {
-        return Animal.AnimalKind.HAMSTER;
+    public AnimalKind getKind() {
+        return AnimalKind.HAMSTER;
     }
 
     @Override
-    public Animal.FoodKind getFoodKind() {
-        return Animal.FoodKind.CORN;
+    public FoodKind getFoodKind() {
+        return FoodKind.CORN;
     }
 
     @Override

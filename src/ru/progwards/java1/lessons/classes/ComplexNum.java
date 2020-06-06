@@ -38,7 +38,7 @@ public class ComplexNum {
     };
 
     public ComplexNum div(ComplexNum num) {
-        int div_d = (a * num.a) / (num.a * num.a + num.b * num.b);
+        int div_d = (a * num.a + b * num.b) / (num.a * num.a + num.b * num.b);
         int div_m = (b * num.a - a * num.b) / (num.a * num.a + num.b * num.b);
 
         return new ComplexNum(div_d, div_m);
