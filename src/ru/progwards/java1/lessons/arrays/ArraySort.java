@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.arrays;
 
-import java.util.Arrays;
-
 public class ArraySort {
     public static void main(String[] args) {
         //
@@ -11,7 +9,7 @@ public class ArraySort {
         int p;
         for (int i = 1; i < a.length; i++) {
             for (int j = 0; j < a.length; j++) {
-                if(a[i] > a[j]) {
+                if(a[i] < a[j]) {
                     p = a[i];
                     a[i] = a[j];
                     a[j] = p;
