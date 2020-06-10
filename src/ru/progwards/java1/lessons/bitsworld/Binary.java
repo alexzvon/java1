@@ -4,7 +4,6 @@ public class Binary {
     byte num;
 
     public static void main(String[] args) {
-        //
     }
 
     public Binary(byte num) {
