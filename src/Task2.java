@@ -15,6 +15,13 @@ public class Task2 {
 
         System.out.println(addAsStrings(1,2));
         System.out.println(addAsStrings(2,1));
+
+
+        byte b = 1;
+        b <<= 1;
+        System.out.println(b);
+
+
     }
 
     static Grade intToGrade(int grade) {

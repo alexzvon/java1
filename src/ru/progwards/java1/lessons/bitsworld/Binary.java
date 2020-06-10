@@ -4,6 +4,10 @@ public class Binary {
     byte num;
 
     public static void main(String[] args) {
+        Binary bbb = new Binary((byte)-3);
+        System.out.println(bbb);
+
+
     }
 
     public Binary(byte num) {
