@@ -1,6 +1,8 @@
 import java.util.Arrays;
 
 public class Task2 {
+    enum Grade { VERYBAD, BAD, SATISFACTORILY, GOOD, EXCELLENT, NOTDEFINED };
+
     public static void main(String[] args)
     {
         printJava();
@@ -13,8 +15,28 @@ public class Task2 {
 
         System.out.println(addAsStrings(1,2));
         System.out.println(addAsStrings(2,1));
-
     }
+
+    static Grade intToGrade(int grade) {
+        switch(grade) {
+            case 1:
+                return Grade.VERYBAD;
+            case 2:
+                return Grade.BAD;
+            case 3:
+                return Grade.SATISFACTORILY;
+            case 4:
+                return Grade.GOOD;
+            case 5:
+                return Grade.EXCELLENT;
+            default:
+                return Grade.NOTDEFINED;
+        }
+    }
+
+
+
+
 
     static int addAsStrings(int n1, int n2) {
         String s1 = String.valueOf(n1);
