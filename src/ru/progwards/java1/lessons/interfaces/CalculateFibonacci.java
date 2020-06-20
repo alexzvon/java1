@@ -4,7 +4,7 @@ public class CalculateFibonacci {
     private static CacheInfo lastFibo;
 
     public static void main(String[] args) {
-    //
+        //
     }
 
     public static int fiboNumber(int n) {
@@ -36,7 +36,6 @@ public class CalculateFibonacci {
     }
 
     public static CacheInfo getLastFibo() {
-        if(lastFibo == null) { lastFibo = new CacheInfo(); }
         return lastFibo;
     }
 

@@ -82,7 +82,8 @@ public class Animal implements FoodCompare, CompareWeight {
 
     @Override
     public CompareResult compareWeight(CompareWeight smthHasWeigt) {
-        int rCFW = Double.compare(calculateFoodWeight(), ((Animal) smthHasWeigt).calculateFoodWeight());
+        int rCFW = Double.compare(getWeight(), ((Animal) smthHasWeigt).getWeight());
+
         CompareResult result = null;
 
         if (0 > rCFW) {
