@@ -102,8 +102,12 @@ public class ArrayInteger {
                 one = 0;
             }
             else {
-                arrByteObj.add((byte)(bA[i] + tenPrev));
-                tenPrev = 0;
+                ten = (byte)((bA[i] + tenPrev) / 10);
+                one = (byte)((bA[i] + tenPrev) - (ten * 10));
+                arrByteObj.add(one);
+                tenPrev = ten;
+                ten = 0;
+                one = 0;
             }
         }
         if (0 < tenPrev) arrByteObj.add(tenPrev);
