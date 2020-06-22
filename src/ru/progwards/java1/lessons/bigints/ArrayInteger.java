@@ -56,9 +56,17 @@ public class ArrayInteger {
 
     void fromInt(BigInteger value) {
         String s = value.toString();
+        int start = 0;
+
+        if (s.length() > digits.length) {
+            start = digits.length;
+        }
+        else {
+            start = s.length();
+        }
 
         for (int i = 0; i < s.length() && i < digits.length; i++) {
-            digits[i] = Byte.valueOf(String.valueOf(s.charAt(s.length() - i - 1)));
+            digits[i] = Byte.valueOf(String.valueOf(s.charAt(start - i - 1)));
         }
     }
 
