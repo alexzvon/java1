@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 public class Coder {
     public static void codeFile(String inFileName, String outFileName, char[] code, String logName) {
-        short symbol;
+        String inline;
+        String outline = "";
+        char symbol;
 
         try {
             FileReader reader = new FileReader(inFileName);
@@ -15,9 +17,16 @@ public class Coder {
             Scanner scanner = new Scanner(reader);
 
             try {
-                while (scanner.hasNextShort()) {
-                    symbol = scanner.nextShort();
-                    writer.write(code[(int)symbol]);
+                while (scanner.hasNextLine()) {
+                    inline = scanner.nextLine();
+                    if(!inline.equals("")) {
+                        for (int i = 0; i < inline.length(); i++) {
+                            symbol = inline.charAt(i);
+                            outline += String.valueOf(code[(int)symbol]);
+                        }
+                        writer.write(outline);
+                        outline = "";
+                    }
                 }
             }
             finally {
