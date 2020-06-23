@@ -22,7 +22,7 @@ public class Coder {
                     if(!inline.equals("")) {
                         for (int i = 0; i < inline.length(); i++) {
                             symbol = inline.charAt(i);
-                            outline += String.valueOf(code[Integer.valueOf(String.valueOf(symbol))]);
+                            outline = String.valueOf(code[(int)symbol]) + outline;
                         }
                         writer.write(outline);
                         outline = "";
