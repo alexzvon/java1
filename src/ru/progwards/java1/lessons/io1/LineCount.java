@@ -8,15 +8,15 @@ import java.util.Scanner;
 public class LineCount {
     public static int calcEmpty(String fileName) {
         int zeroLine = 0;
+        String nl;
 
         try {
             FileReader reader = new FileReader(fileName);
             Scanner scanner = new Scanner(reader);
             try {
                 while (scanner.hasNextLine()) {
-                    if("" == scanner.nextLine()) {
-                        zeroLine++;
-                    }
+                    nl = scanner.nextLine();
+                    if(nl.equals("")) zeroLine++;
                 }
             }
             finally {
