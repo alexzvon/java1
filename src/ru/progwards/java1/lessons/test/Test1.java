@@ -1,114 +1,125 @@
 package ru.progwards.java1.lessons.test;
 
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 public class Test1 {
     public static void main(String[] args) {
-        System.out.print("Сделаю коммит, запушу в репо: робот, проверяй теперь всё это...");
 
-        BigDecimal a = new BigDecimal("10");
-        BigDecimal b = new BigDecimal("20");
+        Test1 tt = new Test1();
+//        tt.scanLines();
 
-        a.multiply(b);
+        String str = "Буря мглою небо кроет";
+        System.out.println(tt.invertWords(str));
 
-        //=============================================
-        String filename = "filename";
+        String file = "starts.txt";
 
-
-
+        try {
+            System.out.println(tt.setStars(file));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
-    public Integer sqr(Integer n) {
-        Integer sqr = 0;
-        try {
-            sqr = n * n;
-        }
-        catch (NullPointerException e) {
-            sqr = -1;
-        }
+    public void scanLines() {
+        String stop = "/stop";
+        String inkl = "";
 
-        return sqr;
+        try (Scanner scaner = new Scanner(System.in)) {
+            while (true) {
+                inkl = scaner.nextLine();
+                if(inkl.contains(stop)) break;
+                if(inkl.contains("Привет")) System.out.println("Здравствуйте!");
+                else if(inkl.contains("как дела")) System.out.println("Хорошо");
+                else System.out.println(inkl);
+            }
+        }
     }
 
-    private int lineCount(String filename) throws IOException{
-        int count = 0;
-        String strFromFile;
-        try {
-            FileReader reader = new FileReader(filename);
-            Scanner scanner = new Scanner(reader);
-            try {
-                while (scanner.hasNextLine()) {
-                    strFromFile = scanner.nextLine();
-                    count++;
+    public String invertWords(String sentence) {
+        String[] insen;
+        insen = sentence.split(" ");
+        String[] outsen = new String[insen.length];
+        String result;
+
+        int j = 0;
+        for (int i = insen.length - 1; i >= 0; i--) {
+            outsen[j++] = insen[i];
+        }
+
+        result = String.join(".", outsen);
+
+        return result;
+    }
+
+    public String setStars(String filename) throws IOException {
+        char symbol;
+        long pos;
+        String result = "";
+
+        try (RandomAccessFile raf = new RandomAccessFile(filename, "rw")){
+            for (int i = 1; i < raf.length() + 1; i++) {
+                symbol = (char)raf.read();
+                System.out.println(i +" (" + (i % 10) + ") -- " + symbol );
+                if ((i % 10) == 0) {
+                    result += String.valueOf(symbol);
+                    pos = raf.getFilePointer() - 1;
+                    raf.seek(pos);
+                    raf.writeBytes("*");
                 }
             }
-            finally {
-                reader.close();
-            }
+        } catch (FileNotFoundException e) {
+            throw new IOException(String.valueOf(e.getClass()));
         }
-        catch (IOException e) {
-            throw new IOException("файл не найден");
-        }
-
-        return count;
-    }
-
-
-
-
-    public String test(String filename) throws IOException {
-        if (filename == null) {
-            throw new IOException("File not found");
-        }
-        else {
-            return "File processing";
-        }
-    }
-
-
-    public interface Speaking {
-        public String say();
-    }
-
-    public interface Eating {
-        public String eat();
-    }
-
-
-
-
-
-
-
-
-
-
-    class Dog implements Speaking, Eating {
-        @Override
-        public String say() {
-            return "Гав";
-        }
-
-        @Override
-        public String eat() {
-            return "Мясо";
-        }
-    }
-
-    class Goat implements Speaking, Eating {
-        @Override
-        public String say() {
-            return "Мее";
-        }
-
-        @Override
-        public String eat() {
-            return "Сено";
+        finally {
+            return result;
         }
     }
 }
+
+//    Реализовать метод с сигнатурой public String setStars(String filename) который читает файл filename
+//    и меняет в нем каждый 10-йбайт на символ *, при этом конкатенируя оригинальный символ в строку ответа.
+//        В случае ошибки выбросить исключение IOException со строкой сообщения:
+//        равной имени класса оригинального сообщения
+//
+//        Например,при содержимом файла:
+//
+//        0123456789012345678A012345678B01
+//
+//        новое содержимое должно быть
+//
+//        012345678*012345678*012345678*01
+//
+//        и метод должен вернуть "9AB"
+
+
+
+
+
+
+
+
+//
+//
+//    Создайте метод с сигнатурой public void scanLines(), который реализует следующий алгоритм:
+//        - вводить с клавиатуры строки, до тех пор, пока во входной строке не встретится "/stop"
+//        - если во входной строке содержится "Привет" вывести на консоль "Здравствуйте!"
+//        - если во входной строке содержится "как дела" вывести на консоль "Хорошо"
+//        - если во входной строке содержится "/stop" - закончить выполнение метода
+//        - во всех остальных случая вывести введенную строку на консоль
+//
+//        Примечание: для проверки, содержит ли строка, содержимое другой строки используйте
+//        метод класса String boolean contains(String str)
+
+
+//    Реализуйте метод с сигнатурой public String invertWords(String sentence),
+//    который переставляет слова, в полученной фразе.
+//        В качестве исходного разделителя использовать пробел.
+//        В качестве соединительного точку.
+//
+//        Например,
+//        invertWords("Буря мглою небо кроет") должен вернуть
+//        "кроет.небо.мглою.Буря"

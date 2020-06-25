@@ -17,17 +17,24 @@ public class Coder {
             Scanner scanner = new Scanner(reader);
 
             try {
-                while (scanner.hasNextLine()) {
-                    inline = scanner.nextLine();
-                    if(!inline.equals("")) {
-                        for (int i = 0; i < inline.length(); i++) {
-                            symbol = inline.charAt(i);
-                            outline += String.valueOf(code[(int)symbol]);
-                        }
-                        writer.write(outline);
-                        outline = "";
-                    }
+                while (scanner.hasNext()) {
+                    symbol = scanner.next().charAt(0);
+                    outline = String.valueOf(code[(int)symbol]);
+                    writer.write(outline);
                 }
+
+//                while (scanner.hasNextLine()) {
+//                    inline = scanner.nextLine();
+//                    if(!inline.equals("")) {
+//                        for (int i = 0; i < inline.length(); i++) {
+//                            symbol = inline.charAt(i);
+//                            outline += String.valueOf(code[(int)symbol]);
+//                        }
+//                        writer.write(outline);
+//                        outline = "";
+//                    }
+//                }
+
             }
             finally {
                 reader.close();
