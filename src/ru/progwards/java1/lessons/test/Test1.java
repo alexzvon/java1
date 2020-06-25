@@ -23,6 +23,18 @@ public class Test1 {
 
     }
 
+    public Integer sqr(Integer n) {
+        Integer sqr = 0;
+        try {
+            sqr = n * n;
+        }
+        catch (NullPointerException e) {
+            sqr = -1;
+        }
+
+        return sqr;
+    }
+
     private int lineCount(String filename) throws IOException{
         int count = 0;
         String strFromFile;
