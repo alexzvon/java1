@@ -9,7 +9,7 @@ public class Censor {
         //
     }
 
-    public static void censorFile(String inoutFileName, String[] obscene) throws IOException {
+    public static void censorFile(String inoutFileName, String[] obscene) throws Throwable {
         StringBuilder sb = new StringBuilder();
         long pos;
 
@@ -45,13 +45,13 @@ public class Censor {
                 raf.close();
             }
         }
-        catch (IOException exception) {
+        catch (Throwable exception) {
             throw new CensorException(exception.getMessage(), inoutFileName);
         }
 
     }
 
-    public static class CensorException extends IOException {
+    public static class CensorException extends Throwable {
         String mesExc;
         String fileName;
 
@@ -66,3 +66,4 @@ public class Censor {
         }
     }
 }
+
