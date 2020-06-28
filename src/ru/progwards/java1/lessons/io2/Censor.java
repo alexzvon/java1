@@ -1,6 +1,5 @@
 package ru.progwards.java1.lessons.io2;
 
-import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class Censor {
@@ -9,7 +8,7 @@ public class Censor {
         //
     }
 
-    public static void censorFile(String inoutFileName, String[] obscene) throws Throwable {
+    public static void censorFile(String inoutFileName, String[] obscene) throws CensorException {
         StringBuilder sb = new StringBuilder();
         long pos;
 
@@ -41,6 +40,9 @@ public class Censor {
                     }
                 }
             }
+            catch (Throwable exception) {
+                throw new CensorException(exception.getMessage(), inoutFileName);
+            }
             finally {
                 raf.close();
             }
@@ -48,7 +50,6 @@ public class Censor {
         catch (Throwable exception) {
             throw new CensorException(exception.getMessage(), inoutFileName);
         }
-
     }
 
     public static class CensorException extends Throwable {
