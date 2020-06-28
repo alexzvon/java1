@@ -8,7 +8,7 @@ public class Censor {
         //
     }
 
-    public static void censorFile(String inoutFileName, String[] obscene) throws Throwable {
+    public static void censorFile(String inoutFileName, String[] obscene) {
         StringBuilder sb = new StringBuilder();
         long pos;
 
@@ -52,7 +52,7 @@ public class Censor {
         }
     }
 
-    public static class CensorException extends Throwable {
+    public static class CensorException extends RuntimeException {
         String mesExc;
         String fileName;
 
@@ -67,4 +67,3 @@ public class Censor {
         }
     }
 }
-
