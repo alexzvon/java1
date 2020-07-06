@@ -1,125 +1,127 @@
 package ru.progwards.java1.lessons.test;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Scanner;
+import java.util.*;
 
 public class Test1 {
     public static void main(String[] args) {
 
-        Test1 tt = new Test1();
-//        tt.scanLines();
+        int[] index1;
 
-        String str = "Буря мглою небо кроет";
-        System.out.println(tt.invertWords(str));
 
-        String file = "starts.txt";
 
-        try {
-            System.out.println(tt.setStars(file));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        int[] arr1 = { 1, 2, 3, 4, 5 };
+        int[] arr2 = { 1, 2, 3, 4, 5, 6, 7 };
+        int[] arr3 = { 1, 2, 3, 4 };
+        int[] arr4 = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        int[] arr5 = { 1, 2, 3, 4, 5, 6 };
+        int[] arr6 = { 1, 2 };
+
+
+        int[][] arr = { arr1, arr2, arr3, arr4, arr5, arr6 };
+
+
+        System.out.println(arr.length);
+
+
+        System.out.println("=================================================================");
+
+        index1 = new int[arr.length];
+
+        for(int i = 0; i < arr.length; i++) {
+             index1[i] = arr[i].length;
         }
+
+        System.out.println(Arrays.toString(index1));
+
+
+
+
+
+
+
+
+
+
+
+    List<Integer> list = new ArrayList<>();
+
+    for (int i = 0; i < 50; i++) {
+        list.add(i);
+    }
+
+    ListIterator<Integer> iter3 = list.listIterator();
+
+    iterator3(iter3);
+
+        System.out.println(list);
+
+
+
+//        System.out.println(listAction(list));
+
+//        System.out.println(list);
+//        System.out.println(filter(list));
+
 
     }
 
-    public void scanLines() {
-        String stop = "/stop";
-        String inkl = "";
+    public static List<Integer> listAction(List<Integer> list) {
+        list.remove(Collections.min(list));
+        list.add(0, list.size());
+        list.add(2, Collections.max(list));
+        return list;
+    }
 
-        try (Scanner scaner = new Scanner(System.in)) {
-            while (true) {
-                inkl = scaner.nextLine();
-                if(inkl.contains(stop)) break;
-                if(inkl.contains("Привет")) System.out.println("Здравствуйте!");
-                else if(inkl.contains("как дела")) System.out.println("Хорошо");
-                else System.out.println(inkl);
+    static List<Integer> filter(List<Integer> list) {
+        int sum = 0;
+        List<Integer> rem = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            sum += list.get(i);
+        }
+
+        System.out.println(sum);
+
+        for (int i = 0; i < list.size(); i++) {
+            if((sum / 100) <= list.get(i)) {
+                rem.add(list.get(i));
+            }
+        }
+
+        System.out.println(rem);
+
+        list.removeAll(rem);
+
+        return list;
+
+    }
+
+    public static  void iterator3(ListIterator<Integer> iterator) {
+        while (iterator.hasNext()) {
+            Integer index = iterator.nextIndex();
+            Integer i = iterator.next();
+            if((i % 3) == 0) {
+                iterator.set(index);
             }
         }
     }
 
-    public String invertWords(String sentence) {
-        String[] insen;
-        insen = sentence.split(" ");
-        String[] outsen = new String[insen.length];
-        String result;
-
-        int j = 0;
-        for (int i = insen.length - 1; i >= 0; i--) {
-            outsen[j++] = insen[i];
-        }
-
-        result = String.join(".", outsen);
-
-        return result;
-    }
-
-    public String setStars(String filename) throws IOException {
-        char symbol;
-        long pos;
-        String result = "";
-
-        try (RandomAccessFile raf = new RandomAccessFile(filename, "rw")){
-            for (int i = 1; i < raf.length() + 1; i++) {
-                symbol = (char)raf.read();
-                System.out.println(i +" (" + (i % 10) + ") -- " + symbol );
-                if ((i % 10) == 0) {
-                    result += String.valueOf(symbol);
-                    pos = raf.getFilePointer() - 1;
-                    raf.seek(pos);
-                    raf.writeBytes("*");
-                }
-            }
-        } catch (FileNotFoundException e) {
-            throw new IOException(String.valueOf(e.getClass()));
-        }
-        finally {
-            return result;
-        }
-    }
 }
 
-//    Реализовать метод с сигнатурой public String setStars(String filename) который читает файл filename
-//    и меняет в нем каждый 10-йбайт на символ *, при этом конкатенируя оригинальный символ в строку ответа.
-//        В случае ошибки выбросить исключение IOException со строкой сообщения:
-//        равной имени класса оригинального сообщения
+//    Напишите метод с сигнатурой public void iterator3(ListIterator<Integer> iterator) который
+//    заменяет значение каждого элемента, которое кратно 3 на значение его индекса.
+
+
+//    удаляет минимальный элемент коллекции
+//    по индексу 0 добавляет число равное количеству элементов
+//        по индексу 2 добавляет максимальный элемент из list
+//        возвращает list как результат метода
+
+
+//    Напишите метод, с сигнатурой public List<Integer> filter(List<Integer> list) который работает
+//        по следующему алгоритму
 //
-//        Например,при содержимом файла:
-//
-//        0123456789012345678A012345678B01
-//
-//        новое содержимое должно быть
-//
-//        012345678*012345678*012345678*01
-//
-//        и метод должен вернуть "9AB"
-
-
-
-
-
-
-
-
-//
-//
-//    Создайте метод с сигнатурой public void scanLines(), который реализует следующий алгоритм:
-//        - вводить с клавиатуры строки, до тех пор, пока во входной строке не встретится "/stop"
-//        - если во входной строке содержится "Привет" вывести на консоль "Здравствуйте!"
-//        - если во входной строке содержится "как дела" вывести на консоль "Хорошо"
-//        - если во входной строке содержится "/stop" - закончить выполнение метода
-//        - во всех остальных случая вывести введенную строку на консоль
-//
-//        Примечание: для проверки, содержит ли строка, содержимое другой строки используйте
-//        метод класса String boolean contains(String str)
-
-
-//    Реализуйте метод с сигнатурой public String invertWords(String sentence),
-//    который переставляет слова, в полученной фразе.
-//        В качестве исходного разделителя использовать пробел.
-//        В качестве соединительного точку.
-//
-//        Например,
-//        invertWords("Буря мглою небо кроет") должен вернуть
-//        "кроет.небо.мглою.Буря"
+//        суммирует значения всех элементов списка
+//        удаляет из списка элементы, значение которых меньше суммы, деленной на 100
+//        (целочисленное деление)
+//        возвращает результирующий список
