@@ -1,5 +1,8 @@
 package ru.progwards.java1.lessons.collections;
 
+import ru.progwards.java1.lessons.arrays.ArraySort;
+import ru.progwards.java1.lessons.bigints.ArrayInteger;
+
 import java.util.*;
 
 public class Finder {
@@ -66,23 +69,24 @@ public class Finder {
     }
 
     public static boolean findSequence(Collection<Integer> numbers) {
-        LinkedList<Integer> ll = new LinkedList<>(numbers);
-        int nm;
+        Iterator<Integer> li = numbers.iterator();
+        int[] it = new int[numbers.size()];
         boolean result = true;
-        boolean find = true;
 
-        for (ListIterator<Integer> it = ll.listIterator(0); it.hasNext();) {
-            nm = it.next();
-            find = true;
-            for (int i = 1; i <= numbers.size(); i++) {
-                if(i == nm) {
-                    find = false;
-                    break;
-                }
-            }
-            if(find) {
+        while (li.hasNext()) {
+            int llii = li.next();
+            if(llii > numbers.size()) {
                 result = false;
                 break;
+            }
+            it[llii - 1] = 1;
+        }
+        if (result) {
+            for (int i = 0; i < it.length; i++) {
+                if (it[i] == 0) {
+                    result = false;
+                    break;
+                }
             }
         }
 

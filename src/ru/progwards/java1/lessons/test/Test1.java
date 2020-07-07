@@ -1,7 +1,11 @@
 package ru.progwards.java1.lessons.test;
 
+import ru.progwards.java1.lessons.bigints.ArrayInteger;
+import ru.progwards.java1.lessons.collections.Creator;
+import ru.progwards.java1.lessons.collections.Finder;
 import ru.progwards.java1.lessons.collections.MatrixIterator;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Test1 {
@@ -45,12 +49,42 @@ public class Test1 {
         System.out.println("");
         System.out.println("-------------------------------------------------------------------");
 
+        System.out.println(Creator.fillOdd(9));
 
 
+        System.out.println("-------------------------------------------------------------------");
+
+        System.out.println(Creator.fill3(3));
+
+        System.out.println("-------------------------------------------------------------------");
 
 
+        Collection<Integer> numbers = new ArrayList<>();
 
+        numbers.add(5);
+        numbers.add(3);
+        numbers.add(7);
+        numbers.add(6);
+        numbers.add(2);
+        numbers.add(8);
+        numbers.add(10);
+        numbers.add(18);
+        numbers.add(4);
+        numbers.add(9);
+        numbers.add(13);
+        numbers.add(11);
+        numbers.add(12);
+        numbers.add(15);
+        numbers.add(14);
+        numbers.add(16);
+        numbers.add(17);
+        numbers.add(1);
 
+//        5,3,7,6,12,11,11,1,4,15,5,11,12,1,14,6,10,1.
+
+        System.out.println(Finder.findSequence(numbers));
+
+        System.out.println("-------------------------------------------------------------------");
 
 
     List<Integer> list = new ArrayList<>();
@@ -71,6 +105,8 @@ public class Test1 {
 
 //        System.out.println(list);
 //        System.out.println(filter(list));
+
+
 
 
     }

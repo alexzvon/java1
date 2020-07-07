@@ -21,7 +21,8 @@ public class Creator {
     public static Collection<Integer> fillOdd(int n) {
         Collection<Integer> col = new ArrayList<>();
 
-        for (int i = n * 3; i > 0; i--) {
+//        for (int i = n * 3; i > 0; i--) {   ---   Непонятно хотя в задании n*3
+        for (int i = n; i > 0; i--) {
             col.add(2 * i - 1);
         }
 
@@ -35,8 +36,8 @@ public class Creator {
 
         for (int i = 0; i < 3 * n; i += 3) {
             col.add(i);
-            col.add((i + 1) * (i + 1));
-            col.add((i + 2) * (i + 2) * (i + 2));
+            col.add(i * i);
+            col.add(i * i * i);
         }
 
         return col;
