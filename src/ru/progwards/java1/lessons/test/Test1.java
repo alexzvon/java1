@@ -1,5 +1,7 @@
 package ru.progwards.java1.lessons.test;
 
+import ru.progwards.java1.lessons.collections.MatrixIterator;
+
 import java.util.*;
 
 public class Test1 {
@@ -7,17 +9,15 @@ public class Test1 {
 
         int[] index1;
 
+        Integer[] arr1 = { 1, 2, 3, 4, 5 };
+        Integer[] arr2 = { 1, 2, 3, 4, 5, 6, 7 };
+        Integer[] arr3 = { 1, 2, 3, 4 };
+        Integer[] arr4 = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        Integer[] arr5 = { 1, 2, 3, 4, 5, 6 };
+        Integer[] arr6 = { 1, 2 };
 
 
-        int[] arr1 = { 1, 2, 3, 4, 5 };
-        int[] arr2 = { 1, 2, 3, 4, 5, 6, 7 };
-        int[] arr3 = { 1, 2, 3, 4 };
-        int[] arr4 = { 1, 2, 3, 4, 5, 6, 7, 8 };
-        int[] arr5 = { 1, 2, 3, 4, 5, 6 };
-        int[] arr6 = { 1, 2 };
-
-
-        int[][] arr = { arr1, arr2, arr3, arr4, arr5, arr6 };
+        Integer[][] arr = { arr1, arr2, arr3, arr4, arr5, arr6 };
 
 
         System.out.println(arr.length);
@@ -34,6 +34,16 @@ public class Test1 {
         System.out.println(Arrays.toString(index1));
 
 
+        MatrixIterator<Integer> mi = new MatrixIterator<>(arr);
+
+        System.out.println("-------------------------------------------------------------------");
+
+        while (mi.hasNext()) {
+            System.out.print(mi.next() + ", ");
+        }
+
+        System.out.println("");
+        System.out.println("-------------------------------------------------------------------");
 
 
 

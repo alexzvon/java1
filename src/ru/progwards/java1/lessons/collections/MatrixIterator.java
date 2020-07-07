@@ -3,50 +3,49 @@ package ru.progwards.java1.lessons.collections;
 import java.util.Iterator;
 
 public class MatrixIterator<T> implements Iterator<T> {
-    private int nextIndexM = 0;
-    private int[] nextIndexN;
+    private int nextIndex = 0;
     private int[] size;
+    private int sum_size = 0;
 
     private T[][] array;
 
-    MatrixIterator(T[][] array) {
+    public MatrixIterator(T[][] array) {
         this.array = array;
-
         size = new int[array.length];
-        nextIndexN = new int[array.length];
 
         for (int i = 0; i < array.length; i++) {
             size[i] = array[i].length;
             sum_size += array[i].length;
-            nextIndexN[i] = 0;
         }
     }
 
     @Override
     public boolean hasNext() {
-
-        return SumSize(nextIndexM + );
+        return nextIndex < sum_size;
     }
 
     @Override
     public T next() {
-
-        return null;
-    }
-
-    private int SumSize(int mIndex) {
-        int s = 0;
-
-        for (int i = 0; i < mIndex; i++) {
-            s += size[i];
+        if(!hasNext()) {
+            nextIndex = 0;
         }
 
-        return s;
+        return ArrayIndex(nextIndex++);
+    }
+
+    private T ArrayIndex(int index) {
+        int ss = 0;
+        int mi = 0;
+        int ni = 0;
+        for (int i = 0; i < size.length; i++) {
+            ss += size[i];
+            if(index < ss) {
+                mi = i;
+                ni = index - ss + size[i];
+                break;
+            }
+        }
+
+        return array[mi][ni];
     }
 }
-
-
-//Сделать итератор MatrixIterator по двумерному массиву (матрице), который разворачивает матрицу в линейную
-//последовательность построчно: a[0][0], a[0][1], ...a[0][N],a[1][0], a[1][1]...a[1][N]... a[M][N]
-
-
