@@ -21,7 +21,6 @@ public class Creator {
     public static Collection<Integer> fillOdd(int n) {
         Collection<Integer> col = new ArrayList<>();
 
-//        for (int i = n * 3; i > 0; i--) {   ---   Непонятно хотя в задании n*3
         for (int i = n; i > 0; i--) {
             col.add(2 * i - 1);
         }

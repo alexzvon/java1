@@ -1,8 +1,5 @@
 package ru.progwards.java1.lessons.collections;
 
-import ru.progwards.java1.lessons.arrays.ArraySort;
-import ru.progwards.java1.lessons.bigints.ArrayInteger;
-
 import java.util.*;
 
 public class Finder {
@@ -96,24 +93,37 @@ public class Finder {
     public static String findSimilar(Collection<String> names) {
         LinkedList<String> ll = new LinkedList<>(names);
         LinkedList<FindSimilar> fs = new LinkedList<>();
-        String nextLL;
-        long nextPos;
 
-        boolean addCol = false;
+        FindSimilar fF = null;
+        FindSimilar nF = null;
 
         for (ListIterator<String> it_ll = ll.listIterator(0); it_ll.hasNext();) {
-            addCol = false;
-            nextLL = it_ll.next();
-            nextPos = it_ll.nextIndex();
-            for (ListIterator<FindSimilar> it_fs = fs.listIterator(0); it_fs.hasNext();) {
-                if(it_fs.next().addCol(nextLL)) {
-                    addCol = true;
-                    break;
+            boolean findAdd = true;
+            nF = new FindSimilar(it_ll.next(), it_ll.nextIndex());
+
+            if (fF == null) {
+                fs.add(nF);
+            }
+            else if (fF.equals(nF)) {
+                for (ListIterator<FindSimilar> it_fs1 = fs.listIterator(0); it_fs1.hasNext();) {
+                    if (it_fs1.next().addCol(nF)) {
+                        break;
+                    }
                 }
             }
-            if(!addCol) {
-                fs.add(new FindSimilar(nextLL, nextPos));
+            else {
+                for (ListIterator<FindSimilar> it_fs2 = fs.listIterator(0); it_fs2.hasNext();) {
+                    if (it_fs2.next().equals(nF)) {
+                        findAdd = false;
+                        break;
+                    }
+                }
+                if(findAdd) {
+                    fs.add(nF);
+                }
             }
+
+            fF = nF;
         }
 
         fs.sort(FindSimilar::compareTo);
@@ -131,14 +141,28 @@ public class Finder {
             this.index = index;
         }
 
-        public boolean addCol(String name) {
+        public boolean addCol(Object o) {
             boolean result = false;
-            if(this.name.equals(name)) {
-                this.col++;
+            if (equals(o)) {
+                col++;
                 result = true;
             }
 
             return result;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            FindSimilar that = (FindSimilar) o;
+
+            return Objects.equals(name, that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, index);
         }
 
         @Override
@@ -158,5 +182,4 @@ public class Finder {
             return name + ":" + col;
         }
     }
-
 }

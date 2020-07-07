@@ -87,6 +87,24 @@ public class Test1 {
         System.out.println("-------------------------------------------------------------------");
 
 
+        Collection<String> str = new ArrayList<>();
+
+        str.add("Василий");
+        str.add("Борис");
+        str.add("Григорий");
+        str.add("Григорий");
+        str.add("Дмитрий");
+        str.add("Григорий");
+        str.add("Александр");
+
+
+//        Василий,Борис,Григорий,Григорий,Дмитрий,Григорий,Александр
+
+        System.out.println(Finder.findSimilar(str));
+
+        System.out.println("-------------------------------------------------------------------");
+
+
     List<Integer> list = new ArrayList<>();
 
     for (int i = 0; i < 50; i++) {
@@ -99,15 +117,9 @@ public class Test1 {
 
         System.out.println(list);
 
-
-
 //        System.out.println(listAction(list));
-
 //        System.out.println(list);
 //        System.out.println(filter(list));
-
-
-
 
     }
 
