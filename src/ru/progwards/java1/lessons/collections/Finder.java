@@ -97,6 +97,8 @@ public class Finder {
         FindSimilar fF = null;
         FindSimilar nF = null;
 
+
+
         for (ListIterator<String> it_ll = ll.listIterator(0); it_ll.hasNext();) {
             boolean findAdd = true;
             nF = new FindSimilar(it_ll.next(), it_ll.nextIndex());
@@ -127,6 +129,7 @@ public class Finder {
         }
 
         fs.sort(FindSimilar::compareTo);
+
 
         return fs.getLast().toString();
     }
