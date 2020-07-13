@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.sets;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

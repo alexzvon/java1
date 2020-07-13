@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.sets;
 
-import ru.progwards.java1.lessons.arrays.DIntArray;
-
 import java.util.*;
 
 public class ProductAnalytics {
