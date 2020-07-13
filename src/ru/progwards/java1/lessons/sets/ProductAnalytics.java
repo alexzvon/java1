@@ -88,41 +88,6 @@ public class ProductAnalytics {
         return count;
     }
 
-    public class Product implements Comparable<Product> {
-        private String code;
-
-        public Product(String code) {
-            this.code = code;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        @Override
-        public int compareTo(Product o) {
-            return code.compareTo(o.getCode());
-        }
-
-        @Override
-        public String toString() {
-            return code;
-        }
-
-    }
-
-    public class Shop {
-        private List<Product> products;
-
-        public Shop(List<Product> products) {
-            this.products = products;
-        }
-
-        public List<Product> getProducts() {
-            return products;
-        }
-    }
-
     public static void main(String[] args) {
 
     }
