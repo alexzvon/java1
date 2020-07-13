@@ -1,7 +1,10 @@
 package ru.progwards.java1.lessons.sets;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 public class LettersInFile {
@@ -9,17 +12,25 @@ public class LettersInFile {
     public static String process(String fileName) throws IOException {
         TreeSet<String> fStr = new TreeSet<>();
         String result = "";
-        RandomAccessFile raf = new RandomAccessFile(fileName, "r");
+        String inline;
+        char symbol;
+
+        FileReader reader = new FileReader(fileName);
+        Scanner scanner = new Scanner(reader);
+
         try {
-            for (long l = 0; l < raf.length(); l++) {
-                int c = raf.read();
-                if (Character.isAlphabetic(c)) {
-                    fStr.add(String.valueOf((char)c));
+            while (scanner.hasNextLine()) {
+                inline = scanner.nextLine();
+                for (int i = 0; i < inline.length(); i++) {
+                    symbol = inline.charAt(i);
+                    if (Character.isAlphabetic(symbol)) {
+                        fStr.add(String.valueOf(symbol));
+                    }
                 }
             }
         }
         finally {
-            raf.close();
+            reader.close();
         }
 
         for (String str: fStr) {
