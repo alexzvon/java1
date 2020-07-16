@@ -5,7 +5,7 @@ import java.util.*;
 public class CollectionsSort {
     static final int COUNT_ELEM = 1000;
     public static void main(String[] args) {
-
+        System.out.println(compareSort());
     }
 
     public static void mySort(Collection<Integer> data) {
@@ -62,11 +62,13 @@ public class CollectionsSort {
         mySort(data);
         ts.add(new TimeSort("mySort", System.currentTimeMillis() - start));
 
+        data.clear();
         data.addAll(ld);
         start = System.currentTimeMillis();
         minSort(data);
         ts.add(new TimeSort("minSort", System.currentTimeMillis() - start));
 
+        data.clear();
         data.addAll(ld);
         start = System.currentTimeMillis();
         collSort(data);
