@@ -34,8 +34,9 @@ public class PizzaBot extends ProgwardsTelegramBot {
         ApiContextInitializer.init();
 
         PizzaBot bot = new PizzaBot();
+
         bot.username = "Pizzaprobabot";
-        bot.token = "1199241295: AAHn6XoOyXYEmgf5ft0IiN7irtQZVegDmMA";
+        bot.token = "1199241295:AAHn6XoOyXYEmgf5ft0IiN7irtQZVegDmMA";
 
         bot.addTags("привет", "привет, здрасьте, здравствуй, добр, день, вечер, утро, hi, hello");
         bot.addTags("конец", "конец, все, стоп, нет");
