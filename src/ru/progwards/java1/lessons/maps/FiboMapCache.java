@@ -60,6 +60,6 @@ public class FiboMapCache {
     }
 
     public static void main(String[] args) {
-        test();
+
     }
 }

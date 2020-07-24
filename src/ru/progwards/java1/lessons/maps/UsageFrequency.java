@@ -63,17 +63,6 @@ public class UsageFrequency {
     }
 
     public static void main(String[] args) {
-        String filename = "wiki.train.tokens";
 
-        UsageFrequency uf = new UsageFrequency();
-
-        try {
-            uf.processFile(filename);
-            System.out.println(uf.getLetters());
-            System.out.println(uf.getWords());
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
