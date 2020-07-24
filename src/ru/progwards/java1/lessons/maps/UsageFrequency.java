@@ -9,17 +9,28 @@ import java.util.Scanner;
 public class UsageFrequency {
     private StringBuffer fileText = new StringBuffer();
 
-    public void processFile(String fileName) throws IOException {
-        FileReader reader = new FileReader(fileName);
-        Scanner scanner = new Scanner(reader);
+    public void processFile(String fileName) {
+        FileReader reader = null;
+        Scanner scanner;
 
         try {
+            reader = new FileReader(fileName);
+            scanner = new Scanner(reader);
+
             while (scanner.hasNextLine()) {
                 fileText.append(scanner.nextLine());
             }
         }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         finally {
-            reader.close();
+            try {
+                reader.close();
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -63,6 +74,13 @@ public class UsageFrequency {
     }
 
     public static void main(String[] args) {
+        String fileName = "wiki.test.tokens";
+
+        UsageFrequency uf = new UsageFrequency();
+        uf.processFile(fileName);
+
+        System.out.println(uf.getLetters());
+        System.out.println(uf.getWords());
 
     }
 }

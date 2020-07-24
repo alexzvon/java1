@@ -8,6 +8,10 @@ public class FiboMapCache {
     private final boolean cacheOn;
     private final Map<Integer, BigDecimal> fiboCache;
 
+    public String toString() {
+        return fiboCache.toString();
+    }
+
     public FiboMapCache(boolean cacheOn) {
         this.cacheOn = cacheOn;
         fiboCache = new HashMap<>();
@@ -32,17 +36,17 @@ public class FiboMapCache {
     private BigDecimal fiboN(int n) {
         if (n <= 2) return new BigDecimal(1);
 
-        int n_2 = 1;
-        int n_1 = 1;
-        int n_s = 0;
+        BigDecimal n_2 = new BigDecimal(1);
+        BigDecimal n_1 = new BigDecimal(1);
+        BigDecimal n_s = new BigDecimal(0);
         for (int i = 2; i < n; i++)
         {
-            n_s = n_1 + n_2;
+            n_s = n_1.add(n_2);
             n_1 = n_2;
             n_2 = n_s;
         }
 
-        return new BigDecimal(n_s);
+        return n_s;
     }
 
     void clearCahe() {
@@ -74,6 +78,6 @@ public class FiboMapCache {
     }
 
     public static void main(String[] args) {
-
+        test();
     }
 }

@@ -15,9 +15,9 @@ public class SalesInfo {
         listTrade = new ArrayList<>();
     }
 
-    public int loadOrders(String fileName) throws IOException {
-        FileReader reader = new FileReader(fileName);
-        Scanner scanner = new Scanner(reader);
+    public int loadOrders(String fileName) {
+        FileReader reader = null;
+        Scanner scanner;
         String inline;
         String[] arrInline;
 
@@ -29,6 +29,8 @@ public class SalesInfo {
         int c = 0;
 
         try {
+            reader = new FileReader(fileName);
+            scanner = new Scanner(reader);
             while (scanner.hasNextLine()) {
                 inline = scanner.nextLine();
 
@@ -49,8 +51,15 @@ public class SalesInfo {
                 }
             }
         }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         finally {
-            reader.close();
+            try {
+                reader.close();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         return c;
@@ -112,6 +121,14 @@ public class SalesInfo {
     }
 
     public static void main(String[] args) {
+        String fileName = "proba.txt";
+
+        SalesInfo si = new SalesInfo();
+
+        si.loadOrders(fileName);
+
+        System.out.println(si.getGoods());
+        System.out.println(si.getCustomers());
 
     }
 }
