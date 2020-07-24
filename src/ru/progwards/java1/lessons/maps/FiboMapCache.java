@@ -24,7 +24,8 @@ public class FiboMapCache {
             valueFibo = fiboCache.get(n);
         }
         else if (cacheOn) {
-            valueFibo = fiboCache.put(n,  fiboN(n));
+            valueFibo = fiboN(n);
+            fiboCache.put(n, valueFibo);
         }
         else {
             valueFibo = fiboN(n);

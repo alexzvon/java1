@@ -7,11 +7,13 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class UsageFrequency {
-    private StringBuffer fileText = new StringBuffer();
+    private StringBuffer fileText;
 
     public void processFile(String fileName) {
         FileReader reader = null;
         Scanner scanner;
+
+        fileText = new StringBuffer();
 
         try {
             reader = new FileReader(fileName);
@@ -41,7 +43,7 @@ public class UsageFrequency {
 
         for (int i = 0; i < fileText.length(); i++) {
             c = fileText.charAt(i);
-            if(Character.isAlphabetic(c)) {
+            if(Character.isAlphabetic(c) || Character.isDigit(c)) {
                 v = hm.getOrDefault(c, 0);
                 hm.put(c, ++v);
             }
@@ -58,15 +60,16 @@ public class UsageFrequency {
 
         for (int i = 0; i < fileText.length(); i++) {
             c = fileText.charAt(i);
-            if(Character.isAlphabetic(c)) {
+            if(Character.isAlphabetic(c) || Character.isDigit(c)) {
                 s += String.valueOf(c);
             }
             else {
+                s = s.trim();
                 if (!s.equals("")) {
                     v = hm.getOrDefault(s, 0);
                     hm.put(s, ++v);
-                    s = "";
                 }
+                s = "";
             }
         }
 

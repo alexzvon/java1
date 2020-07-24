@@ -38,8 +38,8 @@ public class SalesInfo {
                     arrInline = inline.split(",");
 
                     if (arrInline.length == 4) {
-                        fio = arrInline[0];
-                        product = arrInline[1];
+                        fio = arrInline[0].trim();
+                        product = arrInline[1].trim();
                         count = Integer.parseInt(arrInline[2].trim());
                         summa = Double.parseDouble(arrInline[3].trim());
 
