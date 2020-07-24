@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.progwards.java1.lessons.compare_if_cycles.CyclesGoldenFibo;
-
 public class FiboMapCache {
     private final boolean cacheOn;
     private final Map<Integer, BigDecimal> fiboCache;
@@ -22,13 +20,29 @@ public class FiboMapCache {
             valueFibo = fiboCache.get(n);
         }
         else if (cacheOn) {
-            valueFibo = fiboCache.put(n,  new BigDecimal(CyclesGoldenFibo.fiboNumber(n)));
+            valueFibo = fiboCache.put(n,  fiboN(n));
         }
         else {
-            valueFibo = new BigDecimal(CyclesGoldenFibo.fiboNumber(n));
+            valueFibo = fiboN(n);
         }
 
         return valueFibo;
+    }
+
+    private BigDecimal fiboN(int n) {
+        if (n <= 2) return new BigDecimal(1);
+
+        int n_2 = 1;
+        int n_1 = 1;
+        int n_s = 0;
+        for (int i = 2; i < n; i++)
+        {
+            n_s = n_1 + n_2;
+            n_1 = n_2;
+            n_2 = n_s;
+        }
+
+        return new BigDecimal(n_s);
     }
 
     void clearCahe() {
