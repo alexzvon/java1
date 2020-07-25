@@ -86,8 +86,7 @@ public class SalesInfo {
         for (Trade t: listTrade) {
             ase = customers.getOrDefault(t.getFIO(), new AbstractMap.SimpleEntry<Double, Integer>(0.0, 0));
             nsumma = ase.getKey() + t.getSumma();
-            ncount = ase.getValue();
-            ncount++;
+            ncount = ase.getValue() + t.getCount();
             customers.put(t.getFIO(), new AbstractMap.SimpleEntry<Double, Integer>(nsumma, ncount));
         }
 
@@ -118,6 +117,8 @@ public class SalesInfo {
         public String getFIO() {
             return fio;
         }
+
+        public int getCount() { return count; }
     }
 
     public static void main(String[] args) {
