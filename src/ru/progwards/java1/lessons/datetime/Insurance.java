@@ -78,28 +78,12 @@ public class Insurance {
 
         boolean result = false;
 
-
-        System.out.println("==================================================");
-        System.out.println(lzdt);
-        System.out.println(nzdt);
-        System.out.println(lzdt.isBefore(nzdt) || nzdt.equals(lzdt));
-        System.out.println("==================================================");
-
         if (lzdt.isBefore(nzdt) || nzdt.equals(lzdt)) {
             if (duration == null) {
                 result = true;
             }
             else {
                 clzdt = lzdt.plusNanos(duration.toNanos());
-
-                System.out.println(duration);
-
-                System.out.println(("------------------------------------------------------------"));
-                System.out.println(clzdt);
-                System.out.println(nzdt);
-
-                System.out.println(clzdt.isAfter(nzdt) || clzdt.equals(nzdt));
-                System.out.println(("------------------------------------------------------------"));
 
                 if (clzdt.isAfter(nzdt) || clzdt.equals(nzdt)) {
                     result = true;
