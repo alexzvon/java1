@@ -2,9 +2,13 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 public class SessionManager {
     private Map<Integer, UserSession> sessions = new Hashtable<>();
@@ -54,24 +58,41 @@ public class SessionManager {
     }
 
     public void deleteExpired() {
+        List<Integer> lus = new ArrayList<>();
+
         for (var us: sessions.values()) {
             if(!checkSessionValid(us)) {
-                sessions.remove(us.getSessionHandle());
+                lus.add(us.getSessionHandle());
             }
+        }
+
+        for (Integer sh: lus) {
+            sessions.remove(sh);
         }
     }
 
     private boolean checkSessionValid(UserSession us) {
         boolean result = false;
         Duration dur = Duration.between(us.getLastAccess(), ZonedDateTime.now());
-        if (dur.toSeconds() <= sessionValid) {
+        if (dur.toSeconds() < sessionValid) {       //TODO строгое ограничение время доступа к сессии
             result = true;
         }
 
         return result;
     }
 
-    static class UserSession {
+    @Override
+    public String toString() {
+        String result = "";
+
+        for (var us: sessions.values()) {
+            result += us.toString() + "\n";
+        }
+
+        return result;
+    }
+
+    class UserSession {
         private int sessionHandle;
         private String userName;
         private ZonedDateTime lastAccess;
@@ -100,47 +121,59 @@ public class SessionManager {
         public ZonedDateTime getLastAccess() {
             return lastAccess;
         }
+
+        @Override
+        public String toString() {
+            DateTimeFormatter dtf = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+            return sessionHandle + "\t\t" + userName + "\t\t" + lastAccess.format(dtf);
+        }
     }
 
     public static void main(String[] args) {
+        int sv = 10;
+        String name1 = "Иванов";
+        String name2 = "Сидоров";
+        String name3 = "Петров";
 
+        SessionManager sm = new SessionManager(sv);
+
+        try {
+            if (sm.find(name1) == null) {
+                var session1 = sm.new UserSession(name1);
+                sm.add(session1);
+
+                System.out.println(sm.get(session1.getSessionHandle()));
+                System.out.println(sm.get(session1.getSessionHandle()));
+                System.out.println(sm.get(session1.getSessionHandle()));
+
+                TimeUnit.SECONDS.sleep(15);
+
+                if (sm.find(name1) == null) {
+                    var session2 = sm.new UserSession(name2);
+                    sm.add(session2);
+                    System.out.println(sm.sessions);
+
+                    TimeUnit.SECONDS.sleep(5);
+                    var session3 = sm.new UserSession(name3);
+                    sm.add(session3);
+                    System.out.println(sm.sessions);
+
+                    TimeUnit.SECONDS.sleep(6);
+                    sm.deleteExpired();
+                    System.out.println(sm.sessions);
+
+                    sm.delete(session3.getSessionHandle());
+                    System.out.println(sm.sessions);
+                }
+                else {
+                    System.out.println("Ошибка поиска сессии по имени после времени доступа к сессии ");
+                }
+            } else {
+                System.out.println("Ошибка поиска сессии по имени");
+            }
+        }
+        catch (InterruptedException e) {
+            e.getMessage();
+        }
     }
 }
-
-//Реализовать класс для хранения пользовательских сессий для сервера, который проверяет
-// аутентификацию пользователей. Менеджер работает по следующему принципу: при логине
-// (считаем что проверка логин-пароль уже прошла) данные о сессии пользователя заносятся в список
-// и возвращается хэндл сессии. Затем пользователи запрашивают информацию используя хэндл,
-// авторизация идет по хендлу сессии, который валиден определенное время, с момента крайнего запроса.
-// Проверка сессии по хендлу должна работать максимально быстро. У каждого пользователя может быть только
-// одна сессия.
-
-//Протестировать следующим образом:
-//
-//Создать сессию по userName, для этого
-//- сделать find,
-//- убедиться что вернется null
-//- создать новую сессию
-//- добавить используя add
-//
-//Вызвать несколько раз get
-//
-//Подождать (Thread.sleep) время, большее, чем время валидности
-//
-//Проверить что сессии нет через метод get
-//
-//Создать еще одну сессию
-//
-//Подождать половину времени валидности сессии
-//
-//Создать еще одну сессию
-//
-//Подождать еще раз половину времени валидности сессии
-//
-//Вызвать deleteExpired()
-//
-//Убедиться, что одна сессия удалена, вторая нет
-//
-//Удалить оставшуюся через метод delete
-//
-//Убедиться что удаление прошло
