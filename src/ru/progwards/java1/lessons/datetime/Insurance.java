@@ -66,10 +66,8 @@ public class Insurance {
 
     public boolean checkValid(ZonedDateTime dateTime){
         ZonedDateTime lzdt = start;
+        ZonedDateTime clzdt;
         ZonedDateTime nzdt = ZonedDateTime.now(start.getZone());
-
-        Instant lins;
-        Instant nins;
 
         boolean result = false;
 
@@ -77,12 +75,9 @@ public class Insurance {
             result = true;
         }
         else {
-            lzdt.plusNanos(duration.toNanos());
+            clzdt = lzdt.plusNanos(duration.toNanos());
 
-            lins = lzdt.toInstant();
-            nins = nzdt.toInstant();
-
-            if (nins.isAfter(lins) || nins.equals(lins)) {
+            if (clzdt.isAfter(nzdt) || clzdt.equals(nzdt)) {
                 result = true;
             }
         }
@@ -105,6 +100,23 @@ public class Insurance {
     }
 
     public static void main(String[] args) {
+        ZonedDateTime zzz1 = ZonedDateTime.parse("2020-08-06T19:02:14.859261+03:00[Europe/Moscow]");
+        Insurance in5 = new Insurance(zzz1);
+        System.out.println(in5);
+
+
+        System.out.println("=====================================================================");
+        ZonedDateTime zzz = ZonedDateTime.parse("2020-08-03T19:02:14.871527+03:00[Europe/Moscow]");
+
+        Insurance in1 = new Insurance(zzz);
+        in1.setDuration(Duration.ofDays(1));
+        System.out.println(in1);
+
+        System.out.println("=====================================================================");
+
+
+
+
         ZonedDateTime zdt = ZonedDateTime.parse("2020-08-04T17:32:14.783443+03:00[Europe/Moscow]");
 
         System.out.println(zdt);
