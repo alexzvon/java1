@@ -19,19 +19,20 @@ public class Insurance {
         switch(style) {
             case SHORT:
                 dtf = DateTimeFormatter.ISO_LOCAL_DATE;
+                start = LocalDateTime.of(LocalDate.parse(strStart, dtf), LocalTime.now()).atZone(ZoneId.of("Europe/Moscow"));
                 break;
             case LONG:
                 dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+                start = LocalDateTime.parse(strStart, dtf).atZone(ZoneId.of("Europe/Moscow"));
                 break;
             case FULL:
                 dtf = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+                start = ZonedDateTime.parse(strStart);
                 break;
             default:
                 dtf = null;
                 break;
         }
-
-        start = LocalDateTime.parse(strStart, dtf).atZone(ZoneId.of("Europe/Moscow"));
     }
 
     public void setDuration(Duration duration) {
@@ -81,7 +82,7 @@ public class Insurance {
             lins = lzdt.toInstant();
             nins = nzdt.toInstant();
 
-            if (nins.isAfter(lins) && nins.equals(lins)) {
+            if (nins.isAfter(lins) || nins.equals(lins)) {
                 result = true;
             }
         }
@@ -89,6 +90,7 @@ public class Insurance {
         return result;
     }
 
+    @Override
     public String toString() {
         String validStr;
 
@@ -100,5 +102,32 @@ public class Insurance {
         }
 
         return "Insurance issued on " + start + validStr;
+    }
+
+    public static void main(String[] args) {
+        ZonedDateTime zdt = ZonedDateTime.parse("2020-08-04T17:32:14.783443+03:00[Europe/Moscow]");
+
+        System.out.println(zdt);
+
+        Insurance ins = new Insurance(zdt);
+
+        ins.setDuration(Duration.ofDays(2));
+        System.out.println(ins);
+
+        ins.setDuration(ZonedDateTime.parse("2020-08-07T17:32:14.786585+03:00[Europe/Moscow]"));
+        System.out.println(ins);
+
+        ins.setDuration("1000000000", Insurance.FormatStyle.SHORT);
+        System.out.println(ins);
+
+        ins.setDuration("0000-01-04T00:00:00", Insurance.FormatStyle.LONG);
+        System.out.println(ins);
+
+        ins.setDuration(Duration.ofDays(3));
+        System.out.println(ins.checkValid(ZonedDateTime.parse("2020-08-05T17:32:14.793763+03:00[Europe/Moscow]")));
+
+        Insurance ins1 = new Insurance("2020-08-05T17:32:14", FormatStyle.LONG);
+
+        System.out.println(ins1);
     }
 }
