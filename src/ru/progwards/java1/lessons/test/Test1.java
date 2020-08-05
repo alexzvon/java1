@@ -37,6 +37,15 @@ public class Test1 {
         System.out.println(figDetect(new Square(5.0)));
 
 
+        List<Integer> li = new ArrayList<>();
+
+        for (int i: a) {
+            li.add(i);
+        }
+
+        Collections.sort(li);
+        System.out.println(li);
+
     }
 
     static String figDetect(Figure fig) {
