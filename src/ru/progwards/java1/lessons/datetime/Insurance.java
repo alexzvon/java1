@@ -71,13 +71,15 @@ public class Insurance {
 
         boolean result = false;
 
-        if (duration == null) {
-            result = true;
-        }
-        else if (lzdt.isBefore(nzdt) || nzdt.equals(lzdt)) {
-            clzdt = lzdt.plusNanos(duration.toNanos());
-            if (clzdt.isAfter(nzdt) || clzdt.equals(nzdt)) {
+        if (lzdt.isBefore(nzdt) || nzdt.equals(lzdt)) {
+            if (duration == null) {
                 result = true;
+            }
+            else {
+                clzdt = lzdt.plusNanos(duration.toNanos());
+                if (clzdt.isAfter(nzdt) || clzdt.equals(nzdt)) {
+                    result = true;
+                }
             }
         }
 
