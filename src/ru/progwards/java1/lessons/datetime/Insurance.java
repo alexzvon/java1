@@ -19,7 +19,7 @@ public class Insurance {
         switch(style) {
             case SHORT:
                 dtf = DateTimeFormatter.ISO_LOCAL_DATE;
-                start = LocalDateTime.of(LocalDate.parse(strStart, dtf), LocalTime.now()).atZone(ZoneId.of("Europe/Moscow"));
+                start = LocalDateTime.of(LocalDate.parse(strStart, dtf), LocalTime.of(0, 0, 0)).atZone(ZoneId.of("Europe/Moscow"));
                 break;
             case LONG:
                 dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -127,7 +127,11 @@ public class Insurance {
         System.out.println(ins.checkValid(ZonedDateTime.parse("2020-08-05T17:32:14.793763+03:00[Europe/Moscow]")));
 
         Insurance ins1 = new Insurance("2020-08-05T17:32:14", FormatStyle.LONG);
-
         System.out.println(ins1);
+
+        Insurance ins2 = new Insurance("2020-08-04", Insurance.FormatStyle.SHORT);
+        System.out.println(ins2);
+
+
     }
 }
