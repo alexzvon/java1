@@ -54,9 +54,16 @@ public class Insurance {
                 break;
             case LONG:
                 DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-                LocalDateTime ldt1 = LocalDateTime.of(0, 1, 1, 0, 0, 0);
-                LocalDateTime ldt2 = LocalDateTime.parse(strDuration, dtf);
-                duration = Duration.between(ldt1, ldt2);
+                LocalDateTime ldt = LocalDateTime.parse(strDuration, dtf);
+                LocalDateTime ldtE = LocalDateTime.ofEpochSecond (0, 0, ZoneOffset.ofHours(0));
+                LocalDateTime ldtD = ldtE.plusYears(ldt.getYear())
+                    .plusMonths(ldt.getMonthValue())
+                    .plusDays(ldt.getDayOfMonth())
+                    .plusHours(ldt.getHour())
+                    .plusMinutes(ldt.getMinute())
+                    .plusSeconds(ldt.getSecond());
+
+                duration = Duration.between(ldtE, ldtD);
                 break;
             case FULL:
                 duration = Duration.parse(strDuration);
@@ -71,12 +78,29 @@ public class Insurance {
 
         boolean result = false;
 
+
+        System.out.println("==================================================");
+        System.out.println(lzdt);
+        System.out.println(nzdt);
+        System.out.println(lzdt.isBefore(nzdt) || nzdt.equals(lzdt));
+        System.out.println("==================================================");
+
         if (lzdt.isBefore(nzdt) || nzdt.equals(lzdt)) {
             if (duration == null) {
                 result = true;
             }
             else {
                 clzdt = lzdt.plusNanos(duration.toNanos());
+
+                System.out.println(duration);
+
+                System.out.println(("------------------------------------------------------------"));
+                System.out.println(clzdt);
+                System.out.println(nzdt);
+
+                System.out.println(clzdt.isAfter(nzdt) || clzdt.equals(nzdt));
+                System.out.println(("------------------------------------------------------------"));
+
                 if (clzdt.isAfter(nzdt) || clzdt.equals(nzdt)) {
                     result = true;
                 }
@@ -90,7 +114,7 @@ public class Insurance {
     public String toString() {
         String validStr;
 
-        if (duration == null || this.checkValid(ZonedDateTime.now())) {
+        if (this.checkValid(ZonedDateTime.now())) {
             validStr = " is valid";
         }
         else {
