@@ -14,12 +14,6 @@ public class Insurance {
     }
 
     public Insurance(String strStart, FormatStyle style) {
-//        DateTimeFormatter dtf = switch (style) {
-//            case SHORT -> DateTimeFormatter.ISO_LOCAL_DATE;
-//            case LONG -> DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-//            case FULL -> DateTimeFormatter.ISO_ZONED_DATE_TIME;
-//        };
-
         DateTimeFormatter dtf;
 
         switch(style) {
@@ -53,15 +47,19 @@ public class Insurance {
     }
 
     public void setDuration(String strDuration, FormatStyle style) {
-        duration = switch (style) {
-            case SHORT -> Duration.ofMillis(Long.parseLong(strDuration));
-            case LONG -> {
+        switch (style) {
+            case SHORT:
+                duration = Duration.ofMillis(Long.parseLong(strDuration));
+                break;
+            case LONG:
                 DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
                 LocalDateTime ldt1 = LocalDateTime.of(0, 1, 1, 0, 0, 0);
                 LocalDateTime ldt2 = LocalDateTime.parse(strDuration, dtf);
-                yield Duration.between(ldt1, ldt2);
-            }
-            case FULL -> Duration.parse(strDuration);
+                duration = Duration.between(ldt1, ldt2);
+                break;
+            case FULL:
+                duration = Duration.parse(strDuration);
+                break;
         };
     }
 
