@@ -14,11 +14,28 @@ public class Insurance {
     }
 
     public Insurance(String strStart, FormatStyle style) {
-        DateTimeFormatter dtf = switch (style) {
-            case SHORT -> DateTimeFormatter.ISO_LOCAL_DATE;
-            case LONG -> DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-            case FULL -> DateTimeFormatter.ISO_ZONED_DATE_TIME;
-        };
+//        DateTimeFormatter dtf = switch (style) {
+//            case SHORT -> DateTimeFormatter.ISO_LOCAL_DATE;
+//            case LONG -> DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+//            case FULL -> DateTimeFormatter.ISO_ZONED_DATE_TIME;
+//        };
+
+        DateTimeFormatter dtf;
+
+        switch(style) {
+            case SHORT:
+                dtf = DateTimeFormatter.ISO_LOCAL_DATE;
+                break;
+            case LONG:
+                dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+                break;
+            case FULL:
+                dtf = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+                break;
+            default:
+                dtf = null;
+                break;
+        }
 
         start = LocalDateTime.parse(strStart, dtf).atZone(ZoneId.of("Europe/Moscow"));
     }
