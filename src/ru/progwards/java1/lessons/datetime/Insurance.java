@@ -74,7 +74,7 @@ public class Insurance {
     public boolean checkValid(ZonedDateTime dateTime){
         ZonedDateTime lzdt = start;
         ZonedDateTime clzdt;
-        ZonedDateTime nzdt = ZonedDateTime.now(start.getZone());
+        ZonedDateTime nzdt = dateTime;
 
         boolean result = false;
 
