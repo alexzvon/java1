@@ -2,7 +2,13 @@ package ru.progwards.java1.SeaBattle.zvonlexa;
 
 import ru.progwards.java1.SeaBattle.SeaBattle;
 
+import java.util.Arrays;
+
 public class SeaBattleAlg {
+    int[][] seaField = new int[10][10];
+    int miss = 0;
+
+
     // Тестовое поле создаётся конструктором
     //     SeaBattle seaBattle = new SeaBattle(true);
     //
@@ -29,19 +35,54 @@ public class SeaBattleAlg {
     //         8|X|.|.|.|.|.|.|X|.|.|
     //         9|X|.|.|.|X|.|.|.|.|.|
 
+    private void hitBusy(int x, int y) {
+        int point_x;
+        int point_y;
+
+        point_x = x - 1;
+        point_y = y - 1;
+        setPointBusy(point_x, point_y);
+
+        point_x = x - 1;
+        point_y = y + 1;
+        setPointBusy(point_x, point_y);
+
+        point_x = x + 1;
+        point_y = y - 1;
+        setPointBusy(point_x, point_y);
+
+        point_x = x + 1;
+        point_y = y + 1;
+        setPointBusy(point_x, point_y);
+    }
+
+    private void setPointBusy(int x, int y) {
+        if(x > 0 && x < 10 && y > 0 && y < 10) {
+            seaField[ y ][ x ] = 0;
+        }
+    }
+
     public void battleAlgorithm(SeaBattle seaBattle) {
 
-
-        int miss = 0;
+        for (int y = 0; y < seaBattle.getSizeX(); y++) {
+            for (int x = 0; x < seaBattle.getSizeY(); x++) {
+                seaField[y][x] = 1;
+            }
+        }
 
         for (int y = 0; y < seaBattle.getSizeX(); y++) {
         	for (int x = 0; x < seaBattle.getSizeY(); x++) {
-        		SeaBattle.FireResult fireResult = seaBattle.fire(x, y);
-        		if (fireResult != SeaBattle.FireResult.MISS) {
-        		    if (++miss >= 20) {
-        		        return;
+        	    if (seaField[ y ][ x ] == 1) {
+                    SeaBattle.FireResult fireResult = seaBattle.fire(x, y);
+                    if (fireResult != SeaBattle.FireResult.MISS) {
+                        if (++miss >= 20) {
+                            return;
+                        }
+                        hitBusy(x, y);
                     }
                 }
+
+                seaField[ y ][ x ] = 0;
             }
         }
     }
