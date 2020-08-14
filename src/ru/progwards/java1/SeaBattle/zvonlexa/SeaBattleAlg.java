@@ -2,12 +2,9 @@ package ru.progwards.java1.SeaBattle.zvonlexa;
 
 import ru.progwards.java1.SeaBattle.SeaBattle;
 
-import java.util.Arrays;
-
 public class SeaBattleAlg {
     int[][] seaField = new int[10][10];
     int miss = 0;
-
 
     // Тестовое поле создаётся конструктором
     //     SeaBattle seaBattle = new SeaBattle(true);
@@ -91,7 +88,6 @@ public class SeaBattleAlg {
     // функция для отладки
     public static void main(String[] args) {
     	System.out.println("Sea battle");
-
 
 //    	SeaBattle seaBattle = new SeaBattle(true);
 //    	new SeaBattleAlg().battleAlgorithm(seaBattle);
