@@ -17,11 +17,20 @@ public class test2 {
 //        Duration duration = Duration.between(ldt1,ldt2);
 //        System.out.println(duration.toHours());
 
-        LocalDateTime ldt2= LocalDateTime.of(2019, 05, 05, 22, 24);
-        System.out.println(ldt2);
+
+        Date now = new Date();
+        Long unixTS = now.getTime()/1000L;
+
+        LocalDateTime ldt1= LocalDateTime.now();
+        LocalDateTime ldt2= ldt1.plusDays(4);
+        Duration duration = Duration.between(ldt1,ldt2);
+        System.out.println(duration.toHours());
+
 
         ZoneId zid1 = ZoneId.of("Europe/Moscow");
         System.out.println(zid1.getRules().getOffset(Instant.now()));
+
+
         System.out.println(t.createInstant());
 
         String str =  "01.01.2020 16:27:14.444 +0300 Moscow Standard Time";
@@ -34,7 +43,6 @@ public class test2 {
         LocalDateTime l1 = LocalDateTime.of(2020, 1, 1, 22, 25);
         LocalDateTime l2 = LocalDateTime.of(2020, 1, 3, 12, 32);
 
-        Duration duration = Duration.between(l1, l2);
 
         System.out.println(duration);
 
