@@ -2,8 +2,12 @@ package ru.progwards.java1.SeaBattle.zvonlexa;
 
 import ru.progwards.java1.SeaBattle.SeaBattle;
 
+import java.util.Arrays;
+
 public class SeaBattleAlg {
+    SeaBattle seaBattle;
     int[][] seaField = new int[10][10];
+    int[] point = new int[2];
     int miss = 0;
 
     // Тестовое поле создаётся конструктором
@@ -38,49 +42,96 @@ public class SeaBattleAlg {
 
         point_x = x - 1;
         point_y = y - 1;
-        setPointBusy(point_x, point_y);
+        setPointBusy(point_x, point_y, 1);
 
         point_x = x - 1;
         point_y = y + 1;
-        setPointBusy(point_x, point_y);
+        setPointBusy(point_x, point_y, 1);
 
         point_x = x + 1;
         point_y = y - 1;
-        setPointBusy(point_x, point_y);
+        setPointBusy(point_x, point_y, 1);
 
         point_x = x + 1;
         point_y = y + 1;
-        setPointBusy(point_x, point_y);
+        setPointBusy(point_x, point_y, 1);
     }
 
-    private void setPointBusy(int x, int y) {
+    private void setPointBusy(int x, int y, int z) {
         if(x > 0 && x < 10 && y > 0 && y < 10) {
-            seaField[ y ][ x ] = 0;
+            seaField[y][x] = z;
         }
     }
 
-    public void battleAlgorithm(SeaBattle seaBattle) {
+    private boolean nextStep() {
+        for (int y = 0; y < seaBattle.getSizeX(); y++) {
+            for (int x = 0; x < seaBattle.getSizeY(); x++) {
+                if(seaField[y][x] == 0) {
+                    point[0] = x;
+                    point[1] = y;
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void battleAlgorithm(SeaBattle sB) {
+        seaBattle = sB;
         miss = 0;
 
         for (int y = 0; y < seaBattle.getSizeX(); y++) {
             for (int x = 0; x < seaBattle.getSizeY(); x++) {
-                seaField[y][x] = 1;
+                seaField[y][x] = 0;
             }
         }
 
+        System.out.println(seaBattle);
+
+
+
         for (int y = 0; y < seaBattle.getSizeX(); y++) {
         	for (int x = 0; x < seaBattle.getSizeY(); x++) {
-        	    if (seaField[ y ][ x ] == 1) {
-                    SeaBattle.FireResult fireResult = seaBattle.fire(x, y);
-                    if (fireResult != SeaBattle.FireResult.MISS) {
-                        if (++miss >= 20) {
-                            return;
-                        }
-                        hitBusy(x, y);
-                    }
-                }
+        	    point[0] = y;
+        	    point[1] = x;
 
-                seaField[ y ][ x ] = 0;
+//        	    while(nextStep()) {
+                    if (seaField[point[1]][point[0]] == 0) {
+
+                        SeaBattle.FireResult fireResult = seaBattle.fire(point[0], point[1]);
+
+                        if (fireResult != SeaBattle.FireResult.MISS) {
+                            if (++miss >= 20) {
+                                return;
+                            }
+
+                            if (fireResult != SeaBattle.FireResult.HIT) {
+                                seaField[point[1]][point[0]] = -1;
+                                hitBusy(point[0], point[1]);
+                            }
+
+                            if (fireResult != SeaBattle.FireResult.DESTROYED) {
+                                seaField[point[1]][point[0]] = -1;
+                            }
+
+//                            hitBusy(point[0], point[1]);
+                        } else {
+                            seaField[point[1]][point[0]] = 1;
+                        }
+
+
+                        System.out.println("============================================");
+                        for (int i = 0; i < 10; i++) {
+                            System.out.println(Arrays.toString(seaField[i]));
+                        }
+                        System.out.println("============================================");
+
+                    }
+
+//                }
+
             }
         }
     }
@@ -89,11 +140,11 @@ public class SeaBattleAlg {
     public static void main(String[] args) {
     	System.out.println("Sea battle");
 
-//    	SeaBattle seaBattle = new SeaBattle(true);
-//    	new SeaBattleAlg().battleAlgorithm(seaBattle);
-//    	System.out.println(seaBattle.getResult());
+    	SeaBattle seaBattle = new SeaBattle(true);
+    	new SeaBattleAlg().battleAlgorithm(seaBattle);
+    	System.out.println(seaBattle.getResult());
 
-        test();
+//        test();
 
     }
 
@@ -101,13 +152,21 @@ public class SeaBattleAlg {
         SeaBattleAlg alg = new SeaBattleAlg();
         int result = 0;
 
-        for (int i = 0; i < 1000; i++) {
-            SeaBattle seaBattle = new SeaBattle();
+        int prob;
+
+        for (int i = 0; i < 2; i++) {
+            SeaBattle seaBattle = new SeaBattle(true);
             alg.battleAlgorithm(seaBattle);
-            result += seaBattle.getResult();
+
+            prob = (int) seaBattle.getResult();
+
+            System.out.println(prob);
+
+            result += prob;
         }
 
-        System.out.println(result / 1000);
+//        System.out.println(result / 1000);
+        System.out.println(result);
     }
 }
 
