@@ -57,7 +57,7 @@ public class FindDuplicates {
     }
 
     class FileDuplicat {
-        private Path path;
+        final private Path path;
 
         public FileDuplicat(Path path) {
             this.path = path;
