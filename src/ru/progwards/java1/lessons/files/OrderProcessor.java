@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class OrderProcessor {
     final private Path startPath;
@@ -24,7 +23,7 @@ public class OrderProcessor {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (pathMatcher.matches(file)) {
-                        if (!checkLDS(start, finish, shopId, file)) {
+                        if (checkLDS(start, finish, shopId, file)) {
                             listOrder.add(new Order(file));
                         }
                     }
@@ -59,45 +58,108 @@ public class OrderProcessor {
         return shopId == null || shopId.equals(file.getFileName().toString().split("\\.")[0].split("-")[0]);
     }
 
+    public List<Order> process(String shopId) {
+        List<Order> result = null;
+
+        if (shopId == null) {
+            result = new ArrayList<>(listOrder);
+        }
+        else {
+            result = new ArrayList<>();
+            for (Order order: listOrder) {
+                if (shopId.equals(order.shopId())) {
+                    result.add(order);
+                }
+            }
+        }
+
+        result.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o1.datetime().compareTo(o2.datetime());
+            }
+        });
+
+        return result;
+    }
+
+    public Map<String, Double> statisticsByShop() {
+        double sum;
+        Map<String, Double> result = new TreeMap<>();
+
+        for (Order order: listOrder) {
+            if (result.containsKey(order.shopId())) {
+                sum = result.get(order.shopId());
+                sum += order.sum();
+                result.put(order.shopId(), sum);
+            }
+            else {
+                result.put(order.shopId(), order.sum());
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, Double> statisticsByGoods() {
+        double sum;
+        Map<String, Double> result = new TreeMap<>();
+
+        for (Order order: listOrder) {
+            for (OrderItem orderItem: order.items()) {
+                if (result.containsKey(orderItem.googsName())) {
+                    sum = result.get(orderItem.googsName());
+                    sum += (double)orderItem.count() * orderItem.price();
+                    result.put(orderItem.googsName(), sum);
+                }
+                else {
+                    sum = (double)orderItem.count() * orderItem.price();
+                    result.put(orderItem.googsName(), sum);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public Map<LocalDate, Double> statisticsByDay() {
+        double sum;
+        LocalDate key;
+        Map<LocalDate, Double> result = new TreeMap<>();
+
+        for (Order order: listOrder) {
+            key = order.datetime().toLocalDate();
+            sum = 0d;
+            for (OrderItem orderItem: order.items()) {
+                sum += (double)orderItem.count() * orderItem.price();
+            }
+            if (result.containsKey(key)) {
+                sum += result.get(key);
+            }
+            result.put(key, sum);
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         String startPath = "/home/aleksey/leson17/z3/";
 
         LocalDate start = LocalDate.parse("2020-08-23");
-        LocalDate finish = LocalDate.parse("2020-08-23");
-        String shopId = null;
+        LocalDate finish = LocalDate.parse("2020-08-24");
+        String shopId = "S02";
 
         OrderProcessor orderProcessor = new OrderProcessor(startPath);
 
         System.out.println(orderProcessor.loadOrders(start, finish, shopId));
 
+        System.out.println(orderProcessor.process(shopId));
+
+        System.out.println(orderProcessor.statisticsByShop());
+
+        System.out.println(orderProcessor.statisticsByGoods());
+
+        System.out.println(orderProcessor.statisticsByDay());
     }
+
 }
-
-
-//Реализовать класс OrderProcessor со следующими методами
-//
-//3.3 конструктор public OrderProcessor(String startPath) - инициализирует класс,
-// с указанием начальной папки для хранения файлов
-//
-//3.4 метод public int loadOrders(LocalDate start, LocalDate finish, String shopId) - загружает заказы
-// за указанный диапазон дат, с start до finish, обе даты включительно. Если start == null,
-// значит нет ограничения по дате слева, если finish == null, значит нет ограничения по дате справа,
-// если shopId == null - грузим для всех магазинов При наличии хотя бы одной ошибке в формате файла,
-// файл полностью игнорируется, т.е. Не поступает в обработку. Метод возвращает количество файлов с ошибками.
-// При этом, если в классе содержалась информация, ее надо удалить
-//
-//
-//3.5 метод public List<Order> process(String shopId) - выдать список заказов в порядке обработки
-// (отсортированные по дате-времени), для заданного магазина. Если shopId == null, то для всех
-//
-//3.6 метод public Map<String, Double> statisticsByShop() - выдать информацию по объему продаж по магазинам
-// (отсортированную по ключам): String - shopId, double - сумма стоимости всех проданных товаров в этом
-// магазине
-//
-//3.7 метод public Map<String, Double> statisticsByGoods() - выдать информацию по объему продаж по товарам
-// (отсортированную по ключам): String - goodsName, double - сумма стоимости всех проданных товаров этого
-// наименования
-//
-//3.8 метод public Map<LocalDate, Double> statisticsByDay() - выдать информацию по объему продаж по дням
-// (отсортированную по ключам): LocalDate - конкретный день, double - сумма стоимости всех проданных
-// товаров в этот день
