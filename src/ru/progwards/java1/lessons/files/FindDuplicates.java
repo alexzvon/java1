@@ -9,7 +9,7 @@ public class FindDuplicates {
 
     public List<List<String>> findDuplicates(String startPath) {
         List<List<String>> result = new ArrayList<>();
-        List<String> rfd = new ArrayList<>();
+        List<String> rfd = new LinkedList<>();
         List<FileDuplicat> lfd;
 
         try {
