@@ -12,6 +12,11 @@ public class OrderProcessor {
     int count = 0;
     List<Order> listOrder = new ArrayList<>();
 
+    public OrderProcessor() {
+        startPath = Paths.get("");
+        pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
+    }
+
     public OrderProcessor(String start) {
         startPath = Paths.get(start);
         pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
