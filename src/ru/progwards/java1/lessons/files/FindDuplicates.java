@@ -82,8 +82,10 @@ public class FindDuplicates {
         public List<String> toList() {
             List<String> ls = new ArrayList<>();
 
-            ls.add(path.getFileName().toString());
-            ls.add(path.getParent().toString());
+            ls.add(path.toString());
+
+//            ls.add(path.getFileName().toString());
+//            ls.add(path.getParent().toString());
 
             return ls;
         }
