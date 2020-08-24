@@ -9,25 +9,24 @@ public class FindDuplicates {
 
     public List<List<String>> findDuplicates(String startPath) {
         List<List<String>> result = new ArrayList<>();
-        List<String> rfd = new LinkedList<>();
         List<FileDuplicat> lfd;
 
         try {
             for(Map.Entry<Integer, List<FileDuplicat>> entry : listFiles(startPath).entrySet()) {
                 lfd = entry.getValue();
                 if (lfd.size() > 1) {
+                    List<String> rfd = new ArrayList<>();
+
                     for (FileDuplicat fd: lfd) {
                         rfd.add(fd.toList());
                     }
+
+                    result.add(rfd);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        rfd.sort(null);
-
-        result.add(rfd);
 
         return result;
     }
@@ -134,4 +133,7 @@ public class FindDuplicates {
     }
 
 }
+
+
+
 
