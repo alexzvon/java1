@@ -25,6 +25,8 @@ public class FindDuplicates {
             e.printStackTrace();
         }
 
+        rfd.sort(null);
+
         result.add(rfd);
 
         return result;
