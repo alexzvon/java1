@@ -7,17 +7,21 @@ import java.util.*;
 
 public class FindDuplicates {
 
-    public List<List<String>> findDuplicates(String startPath) throws IOException {
+    public List<List<String>> findDuplicates(String startPath) {
         List<List<String>> result = new ArrayList<>();
         List<FileDuplicat> lfd;
 
-        for(Map.Entry<Integer, List<FileDuplicat>> entry : listFiles(startPath).entrySet()) {
-            lfd = entry.getValue();
-            if (lfd.size() > 1) {
-                for (FileDuplicat fd: lfd) {
-                    result.add(fd.toList());
+        try {
+            for(Map.Entry<Integer, List<FileDuplicat>> entry : listFiles(startPath).entrySet()) {
+                lfd = entry.getValue();
+                if (lfd.size() > 1) {
+                    for (FileDuplicat fd: lfd) {
+                        result.add(fd.toList());
+                    }
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return result;
@@ -120,17 +124,12 @@ public class FindDuplicates {
 
         FindDuplicates fd = new FindDuplicates();
 
-        try {
-            for (List<String> ls: fd.findDuplicates(path)) {
-                for (String str: ls) {
-                    System.out.print(str);
-                    System.out.print(" | ");
-                }
-                System.out.println("");
+        for (List<String> ls: fd.findDuplicates(path)) {
+            for (String str: ls) {
+                System.out.print(str);
+                System.out.print(" | ");
             }
-        }
-        catch(IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("");
         }
     }
 

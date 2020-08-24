@@ -9,11 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 public class FilesSelect {
-    public void selectFiles(String inFolder, String outFolder, List<String> keys) throws IOException {
-        for (Map.Entry<String, List<Path>> entry: selectInFolder(inFolder, keys).entrySet()) {
-            List<Path> lpath = entry.getValue();
-            String key = entry.getKey();
-            copyFiles(key, outFolder, lpath);
+    public void selectFiles(String inFolder, String outFolder, List<String> keys) {
+        try {
+            for (Map.Entry<String, List<Path>> entry: selectInFolder(inFolder, keys).entrySet()) {
+                List<Path> lpath = entry.getValue();
+                String key = entry.getKey();
+                copyFiles(key, outFolder, lpath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -77,10 +81,6 @@ public class FilesSelect {
 
         FilesSelect fs = new FilesSelect();
 
-        try {
-            fs.selectFiles(inFolder, outFolder, keys);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fs.selectFiles(inFolder, outFolder, keys);
     }
 }
