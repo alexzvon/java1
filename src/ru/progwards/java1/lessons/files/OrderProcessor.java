@@ -7,20 +7,20 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class OrderProcessor {
-    private Path startPath = Paths.get("");
+    public String startPath;
     private PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
     int count = 0;
     List<Order> listOrder = new ArrayList<>();
 
     public OrderProcessor() { }
 
-    public OrderProcessor(String start) {
-        startPath = Paths.get(start);
+    public OrderProcessor(String startPath) {
+        this.startPath = startPath;
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
         try {
-            Files.walkFileTree(startPath, new SimpleFileVisitor<>(){
+            Files.walkFileTree(Paths.get(startPath), new SimpleFileVisitor<>(){
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (pathMatcher.matches(file)) {
