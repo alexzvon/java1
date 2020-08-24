@@ -40,13 +40,6 @@ public class Order {
         }
     }
 
-//    public String shopId() { return shopId; }
-//    public String orderId() { return orderId; }
-//    public String customerId() { return customerId; }
-//    public LocalDateTime datetime() { return datetime; }
-//    public List<OrderItem> items() { return items; }
-//    public double sum() { return sum; }
-
     public static void main(String[] args) {
         String n = "S02-P01X12-0012.csv";
         String[] sname = n.split("\\.")[0].split("-");
