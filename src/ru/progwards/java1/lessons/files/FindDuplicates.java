@@ -7,8 +7,12 @@ import java.util.*;
 
 public class FindDuplicates {
 
-    public List<List<String>> findDuplicates(String startPath) {
-        List<List<String>> result = new ArrayList<>();
+//    public List<List<String>> findDuplicates(String startPath) {
+//        List<List<String>> result = new ArrayList<>();
+
+    public List<String> findDuplicates(String startPath) {
+        List<String> result = new ArrayList<>();
+
         List<FileDuplicat> lfd;
 
         try {
@@ -79,15 +83,18 @@ public class FindDuplicates {
             return result;
         }
 
-        public List<String> toList() {
-            List<String> ls = new ArrayList<>();
-
-            ls.add(path.toString());
+//        public List<String> toList() {
+        public String toList() {
+//            List<String> ls = new ArrayList<>();
+//
+//            ls.add(path.toString());
 
 //            ls.add(path.getFileName().toString());
 //            ls.add(path.getParent().toString());
 
-            return ls;
+//            return ls;
+
+            return path.toString();
         }
 
         @Override
@@ -126,13 +133,13 @@ public class FindDuplicates {
 
         FindDuplicates fd = new FindDuplicates();
 
-        for (List<String> ls: fd.findDuplicates(path)) {
-            for (String str: ls) {
-                System.out.print(str);
-                System.out.print(" | ");
-            }
-            System.out.println("");
-        }
+//        for (List<String> ls: fd.findDuplicates(path)) {
+//            for (String str: ls) {
+//                System.out.print(str);
+//                System.out.print(" | ");
+//            }
+//            System.out.println("");
+//        }
     }
 
 }
