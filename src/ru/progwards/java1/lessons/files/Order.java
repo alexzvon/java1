@@ -9,12 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Order {
-    private String shopId;
-    private String orderId;
-    private String customerId;
-    private LocalDateTime datetime;
-    private List<OrderItem> items;
-    private double sum;
+    public String shopId;
+    public String orderId;
+    public String customerId;
+    public LocalDateTime datetime;
+    public List<OrderItem> items;
+    public double sum;
 
     public Order(Path file) throws IOException {
         String[] sn = file.getFileName().toString().split("\\.")[0].split("-");
@@ -40,12 +40,12 @@ public class Order {
         }
     }
 
-    public String shopId() { return shopId; }
-    public String orderId() { return orderId; }
-    public String customerId() { return customerId; }
-    public LocalDateTime datetime() { return datetime; }
-    public List<OrderItem> items() { return items; }
-    public double sum() { return sum; }
+//    public String shopId() { return shopId; }
+//    public String orderId() { return orderId; }
+//    public String customerId() { return customerId; }
+//    public LocalDateTime datetime() { return datetime; }
+//    public List<OrderItem> items() { return items; }
+//    public double sum() { return sum; }
 
     public static void main(String[] args) {
         String n = "S02-P01X12-0012.csv";

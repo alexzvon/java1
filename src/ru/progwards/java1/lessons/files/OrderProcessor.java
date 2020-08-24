@@ -67,7 +67,7 @@ public class OrderProcessor {
         else {
             result = new ArrayList<>();
             for (Order order: listOrder) {
-                if (shopId.equals(order.shopId())) {
+                if (shopId.equals(order.shopId)) {
                     result.add(order);
                 }
             }
@@ -76,7 +76,7 @@ public class OrderProcessor {
         result.sort(new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                return o1.datetime().compareTo(o2.datetime());
+                return o1.datetime.compareTo(o2.datetime);
             }
         });
 
@@ -88,13 +88,13 @@ public class OrderProcessor {
         Map<String, Double> result = new TreeMap<>();
 
         for (Order order: listOrder) {
-            if (result.containsKey(order.shopId())) {
-                sum = result.get(order.shopId());
-                sum += order.sum();
-                result.put(order.shopId(), sum);
+            if (result.containsKey(order.shopId)) {
+                sum = result.get(order.shopId);
+                sum += order.sum;
+                result.put(order.shopId, sum);
             }
             else {
-                result.put(order.shopId(), order.sum());
+                result.put(order.shopId, order.sum);
             }
         }
 
@@ -106,7 +106,7 @@ public class OrderProcessor {
         Map<String, Double> result = new TreeMap<>();
 
         for (Order order: listOrder) {
-            for (OrderItem orderItem: order.items()) {
+            for (OrderItem orderItem: order.items) {
                 if (result.containsKey(orderItem.googsName())) {
                     sum = result.get(orderItem.googsName());
                     sum += (double)orderItem.count() * orderItem.price();
@@ -128,9 +128,9 @@ public class OrderProcessor {
         Map<LocalDate, Double> result = new TreeMap<>();
 
         for (Order order: listOrder) {
-            key = order.datetime().toLocalDate();
+            key = order.datetime.toLocalDate();
             sum = 0d;
-            for (OrderItem orderItem: order.items()) {
+            for (OrderItem orderItem: order.items) {
                 sum += (double)orderItem.count() * orderItem.price();
             }
             if (result.containsKey(key)) {
