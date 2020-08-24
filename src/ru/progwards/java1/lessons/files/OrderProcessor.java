@@ -7,19 +7,15 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class OrderProcessor {
-    final private Path startPath;
-    final private PathMatcher pathMatcher;
+    private Path startPath = Paths.get("");
+    private PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
     int count = 0;
     List<Order> listOrder = new ArrayList<>();
 
-    public OrderProcessor() {
-        startPath = Paths.get("");
-        pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
-    }
+    public OrderProcessor() { }
 
     public OrderProcessor(String start) {
         startPath = Paths.get(start);
-        pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
