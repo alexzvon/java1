@@ -8,12 +8,12 @@ import java.util.*;
 
 public class OrderProcessor {
     final private Path startPath;
-    final PathMatcher pathMatcher;
+    final private PathMatcher pathMatcher;
     int count = 0;
     List<Order> listOrder = new ArrayList<>();
 
-    public OrderProcessor(String startPath) {
-        this.startPath = Paths.get(startPath);
+    public OrderProcessor(String start) {
+        startPath = Paths.get(start);
         pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
     }
 
