@@ -107,14 +107,14 @@ public class OrderProcessor {
 
         for (Order order: listOrder) {
             for (OrderItem orderItem: order.items) {
-                if (result.containsKey(orderItem.googsName())) {
-                    sum = result.get(orderItem.googsName());
-                    sum += (double)orderItem.count() * orderItem.price();
-                    result.put(orderItem.googsName(), sum);
+                if (result.containsKey(orderItem.googsName)) {
+                    sum = result.get(orderItem.googsName);
+                    sum += (double)orderItem.count * orderItem.price;
+                    result.put(orderItem.googsName, sum);
                 }
                 else {
-                    sum = (double)orderItem.count() * orderItem.price();
-                    result.put(orderItem.googsName(), sum);
+                    sum = (double)orderItem.count * orderItem.price;
+                    result.put(orderItem.googsName, sum);
                 }
             }
         }
@@ -131,7 +131,7 @@ public class OrderProcessor {
             key = order.datetime.toLocalDate();
             sum = 0d;
             for (OrderItem orderItem: order.items) {
-                sum += (double)orderItem.count() * orderItem.price();
+                sum += (double)orderItem.count * orderItem.price;
             }
             if (result.containsKey(key)) {
                 sum += result.get(key);

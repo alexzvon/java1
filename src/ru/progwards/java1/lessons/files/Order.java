@@ -32,11 +32,15 @@ public class Order {
 
         for (String line: lines) {
             String[] sl = line.split(",");
-            OrderItem orderItem = new OrderItem(sl[0], Integer.parseInt(sl[1].trim()), Double.parseDouble(sl[2]));
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.googsName = sl[0];
+            orderItem.count = Integer.parseInt(sl[1].trim());
+            orderItem.price = Double.parseDouble(sl[2]);
 
             items.add(orderItem);
 
-            sum += (double)orderItem.count() * orderItem.price();
+            sum += (double)orderItem.count * orderItem.price;
         }
     }
 
