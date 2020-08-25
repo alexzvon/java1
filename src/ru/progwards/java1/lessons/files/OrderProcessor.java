@@ -50,10 +50,11 @@ public class OrderProcessor {
     }
 
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
-        LocalDate date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
 
+        System.out.println(file);
         System.out.println(Files.getLastModifiedTime(file));
 
+        LocalDate date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
 
         System.out.println(date);
 
