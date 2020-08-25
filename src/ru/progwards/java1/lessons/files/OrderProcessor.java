@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class OrderProcessor {
@@ -49,7 +50,19 @@ public class OrderProcessor {
     }
 
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
-        LocalDate date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
+        LocalDate date = LocalDate.now();
+
+        try {
+            date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
+        }
+        catch (DateTimeParseException e) {
+            System.out.println(e.getMessage());
+            System.out.println(file);
+            System.out.println(Files.getLastModifiedTime(file));
+            System.out.println(Files.getLastModifiedTime(file).toString().split("T")[0]);
+            date = LocalDate.now();
+        }
+
 
         if (start != null && start.isAfter(date)) {
             return false;
