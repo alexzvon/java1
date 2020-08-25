@@ -26,7 +26,7 @@ public class Order {
         customerId = sn[2];
         sum = 0d;
 
-        datetime = LocalDateTime.parse(Files.getLastModifiedTime(file).toString().split("\\.")[0]);
+        datetime = LocalDateTime.parse(Files.getLastModifiedTime(file).toString().split("\\.")[0].replace("Z", ""));
 
         List<String> lines = Files.readAllLines(file);
 
@@ -51,6 +51,11 @@ public class Order {
         String[] sname = n.split("\\.")[0].split("-");
 
         System.out.println(Arrays.toString(sname));
+
+        String text = "2020-01-16T14:16:16Z";
+
+        System.out.println(text.replace("Z", ""));
+
     }
 
 }

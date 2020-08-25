@@ -44,9 +44,7 @@ public class OrderProcessor {
     }
 
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
-        LocalDate date = LocalDate.now();
-
-//            date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
+        LocalDate  date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
 
         if (start != null && start.isAfter(date)) {
             return false;
