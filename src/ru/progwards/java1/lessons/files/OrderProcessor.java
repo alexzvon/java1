@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class OrderProcessor {
@@ -16,10 +15,6 @@ public class OrderProcessor {
     public OrderProcessor(String startPath) {
         this.startPath = startPath;
     }
-
-//ERROR: Тест "Метод loadOrders(LocalDate start, LocalDate finish, String shopId)" не пройден.
-// Во время выполнения возникло исключение java.time.format.DateTimeParseException:
-// Text '2020-01-16T14:16:16Z' could not be parsed, unparsed text found at index 19
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
         try {
@@ -42,8 +37,7 @@ public class OrderProcessor {
                 }
             });
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-//            e.printStackTrace();
+            e.printStackTrace();
         }
 
         return count;
@@ -52,17 +46,7 @@ public class OrderProcessor {
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
         LocalDate date = LocalDate.now();
 
-        try {
-            date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
-        }
-        catch (DateTimeParseException e) {
-            System.out.println(e.getMessage());
-            System.out.println(file);
-            System.out.println(Files.getLastModifiedTime(file));
-            System.out.println(Files.getLastModifiedTime(file).toString().split("T")[0]);
-            date = LocalDate.now();
-        }
-
+//            date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
 
         if (start != null && start.isAfter(date)) {
             return false;
