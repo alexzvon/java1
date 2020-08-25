@@ -16,6 +16,8 @@ public class Order {
     public List<OrderItem> items;
     public double sum;
 
+    public Order() {}
+
     public Order(Path file) throws IOException {
         String[] sn = file.getFileName().toString().split("\\.")[0].split("-");
 
