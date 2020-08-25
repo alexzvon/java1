@@ -41,20 +41,15 @@ public class OrderProcessor {
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+//            e.printStackTrace();
         }
 
         return count;
     }
 
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
-
-        System.out.println(file);
-        System.out.println(Files.getLastModifiedTime(file));
-
         LocalDate date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
-
-        System.out.println(date);
 
         if (start != null && start.isAfter(date)) {
             return false;
