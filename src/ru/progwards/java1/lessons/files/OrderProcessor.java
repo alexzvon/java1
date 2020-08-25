@@ -1,5 +1,7 @@
 package ru.progwards.java1.lessons.files;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -12,11 +14,13 @@ public class OrderProcessor {
     int count = 0;
     List<Order> listOrder = new ArrayList<>();
 
-    public OrderProcessor() { }
-
     public OrderProcessor(String startPath) {
         this.startPath = startPath;
     }
+
+//ERROR: Тест "Метод loadOrders(LocalDate start, LocalDate finish, String shopId)" не пройден.
+// Во время выполнения возникло исключение java.time.format.DateTimeParseException:
+// Text '2020-01-16T14:16:16Z' could not be parsed, unparsed text found at index 19
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
         try {
@@ -47,6 +51,11 @@ public class OrderProcessor {
 
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
         LocalDate date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
+
+        System.out.println(Files.getLastModifiedTime(file));
+
+
+        System.out.println(date);
 
         if (start != null && start.isAfter(date)) {
             return false;
@@ -146,9 +155,9 @@ public class OrderProcessor {
     public static void main(String[] args) {
         String startPath = "/home/aleksey/leson17/z3/";
 
-        LocalDate start = LocalDate.parse("2020-08-23");
-        LocalDate finish = LocalDate.parse("2020-08-24");
-        String shopId = "S02";
+        LocalDate start = null;     //LocalDate.parse("2020-08-23");
+        LocalDate finish = null;        //LocalDate.parse("2020-08-24");
+        String shopId = null;       //"S02";
 
         OrderProcessor orderProcessor = new OrderProcessor(startPath);
 
