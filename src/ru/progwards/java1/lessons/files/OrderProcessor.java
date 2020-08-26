@@ -23,16 +23,23 @@ public class OrderProcessor {
             try {
                 Files.walkFileTree(Paths.get(startPath), new SimpleFileVisitor<>() {
                     @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        if (pathMatcher.matches(file)) {
-                            if (checkLDS(start, finish, shopId, file)) {
-                                Order order = new Order(file);
-                                if (order.check) {
-                                    listOrder.add(order);
-                                } else {
-                                    count++;
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                        try {
+                            if (pathMatcher.matches(file)) {
+                                if (checkLDS(start, finish, shopId, file)) {
+                                    Order order = new Order(file);
+                                    if (order.check) {
+                                        listOrder.add(order);
+                                    } else {
+                                        count++;
+                                    }
                                 }
                             }
+                        }
+                        catch (IOException e) {
+                            System.out.println(e.getMessage());
+                            System.out.println("-- " + file + " --");
+                            e.printStackTrace();
                         }
 
                         return FileVisitResult.CONTINUE;
@@ -45,6 +52,7 @@ public class OrderProcessor {
                     }
                 });
             } catch (IOException e) {
+                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -180,4 +188,3 @@ public class OrderProcessor {
         System.out.println(orderProcessor.statisticsByDay());
     }
 }
-
