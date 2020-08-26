@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Order {
+    public boolean check = true;
     public String shopId;
     public String orderId;
     public String customerId;
@@ -35,12 +36,12 @@ public class Order {
         items = new ArrayList<>();
 
         for (String line: lines) {
-            String[] sl = line.split(",");
+            if (!checkLine(line)) {
+                check = false;
+                break;
+            }
 
-            if (sl.length != 3) continue;
-            if (sl[0].trim().length() == 0) continue;
-            if (!checkInt(sl[1])) continue;
-            if (!checkDouble(sl[2])) continue;
+            String[] sl = line.split(",");
 
             OrderItem orderItem = new OrderItem();
 
@@ -52,6 +53,18 @@ public class Order {
 
             sum += (double)orderItem.count * orderItem.price;
         }
+    }
+
+    private boolean checkLine(String line) {
+        boolean result = true;
+
+        String[] sl = line.split(",");
+
+        if (sl.length != 3 || sl[0].trim().length() == 0 || !checkInt(sl[1]) || !checkDouble(sl[2])) {
+            result = false;
+        }
+
+        return result;
     }
 
     private boolean checkInt(String s) {

@@ -23,7 +23,13 @@ public class OrderProcessor {
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (pathMatcher.matches(file)) {
                         if (checkLDS(start, finish, shopId, file)) {
-                            listOrder.add(new Order(file));
+                            Order order = new Order(file);
+                            if (order.check) {
+                                listOrder.add(order);
+                            }
+                            else {
+                                count++;
+                            }
                         }
                     }
 
