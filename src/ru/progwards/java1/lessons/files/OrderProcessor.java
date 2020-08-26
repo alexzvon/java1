@@ -158,7 +158,8 @@ public class OrderProcessor {
         LocalDate finish = null;        //LocalDate.parse("2020-08-24");
         String shopId = null;       //"S02";
 
-        OrderProcessor orderProcessor = new OrderProcessor(startPath);
+//        OrderProcessor orderProcessor = new OrderProcessor(startPath);
+        OrderProcessor orderProcessor = new OrderProcessor("");
 
         System.out.println(orderProcessor.loadOrders(start, finish, shopId));
 
