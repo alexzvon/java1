@@ -68,7 +68,7 @@ public class OrderProcessor {
             return false;
         }
 
-        if (start != null && finish.isBefore(date)) {
+        if (finish != null && finish.isBefore(date)) {
             return false;
         }
 
