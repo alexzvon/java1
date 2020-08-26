@@ -10,7 +10,7 @@ import java.util.*;
 
 public class OrderProcessor {
     public String startPath;
-    private PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
+    private final PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
     int count = 0;
     public List<Order> listOrder = new ArrayList<>();
 
@@ -23,23 +23,16 @@ public class OrderProcessor {
             try {
                 Files.walkFileTree(Paths.get(startPath), new SimpleFileVisitor<>() {
                     @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                        try {
-                            if (pathMatcher.matches(file)) {
-                                if (checkLDS(start, finish, shopId, file)) {
-                                    Order order = new Order(file);
-                                    if (order.check) {
-                                        listOrder.add(order);
-                                    } else {
-                                        count++;
-                                    }
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        if (pathMatcher.matches(file)) {
+                            if (checkLDS(start, finish, shopId, file)) {
+                                Order order = new Order(file);
+                                if (order.check) {
+                                    listOrder.add(order);
+                                } else {
+                                    count++;
                                 }
                             }
-                        }
-                        catch (IOException e) {
-                            System.out.println(e.getMessage());
-                            System.out.println("-- " + file + " --");
-                            e.printStackTrace();
                         }
 
                         return FileVisitResult.CONTINUE;
@@ -52,7 +45,6 @@ public class OrderProcessor {
                     }
                 });
             } catch (IOException e) {
-                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -166,8 +158,7 @@ public class OrderProcessor {
         LocalDate finish = null;        //LocalDate.parse("2020-08-24");
         String shopId = null;       //"S02";
 
-//        OrderProcessor orderProcessor = new OrderProcessor(startPath);
-        OrderProcessor orderProcessor = new OrderProcessor("");
+        OrderProcessor orderProcessor = new OrderProcessor(startPath);
 
         System.out.println(orderProcessor.loadOrders(start, finish, shopId));
 
