@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,8 @@ public class Order {
         customerId = sn[2];
         sum = 0d;
 
-        datetime = LocalDateTime.parse(Files.getLastModifiedTime(file).toString().split("\\.")[0].replace("Z", ""));
+        String normalize = Files.getLastModifiedTime(file).toString().replaceFirst("^(\\d+-\\d+-\\d+T\\d+:\\d+:\\d+).*+", "$1");
+        datetime = LocalDateTime.parse(normalize);
 
         List<String> lines = Files.readAllLines(file);
 
@@ -35,7 +37,13 @@ public class Order {
         for (String line: lines) {
             String[] sl = line.split(",");
 
+            if (sl.length != 3) continue;
+            if (sl[0].trim().length() == 0) continue;
+            if (!checkInt(sl[1])) continue;
+            if (!checkDouble(sl[2])) continue;
+
             OrderItem orderItem = new OrderItem();
+
             orderItem.googsName = sl[0];
             orderItem.count = Integer.parseInt(sl[1].trim());
             orderItem.price = Double.parseDouble(sl[2]);
@@ -46,16 +54,28 @@ public class Order {
         }
     }
 
-    public static void main(String[] args) {
-        String n = "S02-P01X12-0012.csv";
-        String[] sname = n.split("\\.")[0].split("-");
+    private boolean checkInt(String s) {
+        if (s.trim().length() == 0) return false;
+        for (char c: s.trim().toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
 
-        System.out.println(Arrays.toString(sname));
-
-        String text = "2020-01-16T14:16:16Z";
-
-        System.out.println(text.replace("Z", ""));
-
+        return  true;
     }
 
+    private boolean checkDouble(String s) {
+        if (s.trim().length() == 0) return false;
+        for (char d : s.trim().toCharArray()) {
+            if(!(Character.isDigit(d) || '.' == d)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+    }
 }
