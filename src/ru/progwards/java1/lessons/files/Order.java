@@ -3,10 +3,10 @@ package ru.progwards.java1.lessons.files;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Order {
@@ -28,8 +28,8 @@ public class Order {
         customerId = sn[2];
         sum = 0d;
 
-        String normalize = Files.getLastModifiedTime(file).toString().replaceFirst("^(\\d+-\\d+-\\d+T\\d+:\\d+:\\d+).*+", "$1");
-        datetime = LocalDateTime.parse(normalize);
+        long ms = Files.getLastModifiedTime(file).toMillis();
+        datetime = LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), ZoneId.systemDefault());
 
         List<String> lines = Files.readAllLines(file);
 

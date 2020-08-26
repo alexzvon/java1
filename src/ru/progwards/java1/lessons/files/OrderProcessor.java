@@ -3,54 +3,58 @@ package ru.progwards.java1.lessons.files;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 public class OrderProcessor {
     public String startPath;
     private PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
     int count = 0;
-    List<Order> listOrder = new ArrayList<>();
+    public List<Order> listOrder = new ArrayList<>();
 
     public OrderProcessor(String startPath) {
         this.startPath = startPath;
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
-        try {
-            Files.walkFileTree(Paths.get(startPath), new SimpleFileVisitor<>(){
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if (pathMatcher.matches(file)) {
-                        if (checkLDS(start, finish, shopId, file)) {
-                            Order order = new Order(file);
-                            if (order.check) {
-                                listOrder.add(order);
-                            }
-                            else {
-                                count++;
+        if (startPath != null && !startPath.isEmpty()) {
+            try {
+                Files.walkFileTree(Paths.get(startPath), new SimpleFileVisitor<>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        if (pathMatcher.matches(file)) {
+                            if (checkLDS(start, finish, shopId, file)) {
+                                Order order = new Order(file);
+                                if (order.check) {
+                                    listOrder.add(order);
+                                } else {
+                                    count++;
+                                }
                             }
                         }
+
+                        return FileVisitResult.CONTINUE;
                     }
 
-                    return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult visitFileFailed(Path file, IOException exc) {
-                    count++;
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+                    @Override
+                    public FileVisitResult visitFileFailed(Path file, IOException exc) {
+                        count++;
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return count;
     }
 
     private boolean checkLDS(LocalDate start, LocalDate finish, String shopId, Path file) throws IOException {
-        LocalDate  date = LocalDate.parse(Files.getLastModifiedTime(file).toString().split("T")[0]);
+        long ms = Files.getLastModifiedTime(file).toMillis();
+        LocalDate  date = LocalDate.ofInstant(Instant.ofEpochMilli(ms), ZoneId.systemDefault());
 
         if (start != null && start.isAfter(date)) {
             return false;
@@ -158,6 +162,14 @@ public class OrderProcessor {
 
         System.out.println(orderProcessor.loadOrders(start, finish, shopId));
 
+        for (Order order: orderProcessor.listOrder) {
+            System.out.println("shopId:" + order.shopId + ", orderId:" + order.orderId  + ", customerId:" + order.customerId   +
+                    ", sum:" + order.sum + ", datetime:" + order.datetime + ", items:");
+            for (OrderItem orderItem: order.items) {
+                System.out.println("goodsName:" + orderItem.googsName + ", count:" + orderItem.count  + ", price:" + orderItem.price);
+            }
+        }
+
         System.out.println(orderProcessor.process(shopId));
 
         System.out.println(orderProcessor.statisticsByShop());
@@ -166,5 +178,5 @@ public class OrderProcessor {
 
         System.out.println(orderProcessor.statisticsByDay());
     }
-
 }
+
