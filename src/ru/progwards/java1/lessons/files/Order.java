@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Order {
@@ -53,6 +54,13 @@ public class Order {
 
             sum += (double)orderItem.count * orderItem.price;
         }
+
+        items.sort(new Comparator<OrderItem>() {
+            @Override
+            public int compare(OrderItem o1, OrderItem o2) {
+                return o1.googsName.compareTo(o2.googsName);
+            }
+        });
     }
 
     private boolean checkLine(String line) {
