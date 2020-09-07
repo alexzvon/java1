@@ -7,6 +7,7 @@ public class CheckBit {
     }
 
     public static int checkBit(byte value, int bitNumber) {
+
         return (int)((value >> bitNumber) & 0b0000_0001);
     }
 }
