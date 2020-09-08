@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.register2;
 
-import ru.progwards.java1.lessons.register1.Bit;
-
 public class IntRegister extends Register {
     public Bit[] value;
 
@@ -60,21 +58,6 @@ public class IntRegister extends Register {
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        int i1 = 1253;
-        int i2 = -1253;
-
-        IntRegister ir1 = new IntRegister(i1);
-        IntRegister ir2 = new IntRegister(i2);
-
-        System.out.println(ir1);
-        System.out.println(ir2);
-
-        System.out.println(ir1.toDecString());
-        System.out.println(ir2.toDecString());
-
     }
 }
 

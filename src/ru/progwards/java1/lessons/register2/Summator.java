@@ -1,6 +1,6 @@
 package ru.progwards.java1.lessons.register2;
 
-import ru.progwards.java1.lessons.register1.ByteRegister;
+//import ru.progwards.java1.lessons.register1.ByteRegister;
 
 public class Summator {
     public static void add(Register value1, Register value2) {
@@ -10,17 +10,17 @@ public class Summator {
         int iR1;
         int iR2;
 
-        if (value1 instanceof ByteRegister) {
-            vR1 = (ByteRegister) value1;
-        }
-        else if (value1 instanceof IntRegister) {
+//        if (value1 instanceof ByteRegister) {
+//            vR1 = (ByteRegister) value1;
+//        }
+        if (value1 instanceof IntRegister) {
             vR1 = (IntRegister) value1;
         }
 
-        if (value2 instanceof ByteRegister) {
-            vR2 = (ByteRegister) value2;
-        }
-        else if (value2 instanceof IntRegister) {
+//        if (value2 instanceof ByteRegister) {
+//            vR2 = (ByteRegister) value2;
+//        }
+        if (value2 instanceof IntRegister) {
             vR2 = (IntRegister) value2;
         }
 
@@ -40,10 +40,10 @@ public class Summator {
         Register vR = null;
         int v;
 
-        if (value instanceof ByteRegister) {
-            vR = (ByteRegister) value;
-        }
-        else if (value instanceof IntRegister) {
+//        if (value instanceof ByteRegister) {
+//            vR = (ByteRegister) value;
+//        }
+        if (value instanceof IntRegister) {
             vR = (IntRegister) value;
         }
 
