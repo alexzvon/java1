@@ -6,7 +6,7 @@ public class ArraySort {
 
         for (int i = 1; i < a.length; i++) {
             for (int j = 0; j < a.length; j++) {
-                if(0 < a[i].compareTo((Number) a[j])) {
+                if(0 > a[i].compareTo((Number) a[j])) {
                     n = (Number)a[i];
                     a[i] = a[j];
                     a[j] = n;
@@ -15,3 +15,4 @@ public class ArraySort {
         }
     }
 }
+
