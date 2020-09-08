@@ -10,10 +10,10 @@ public class ByteRegister extends Register {
     }
 
     public ByteRegister(byte value) {
-        init((int)value);
+        init(value);
     }
 
-    public void init(int value) {
+    public void init(byte value) {
         for (int i = 0; i < 8; i++) {
             if (1 == (value & 1)) {
                 this.value[ 7 - i ] = new Bit(true);
@@ -21,7 +21,6 @@ public class ByteRegister extends Register {
             else {
                 this.value[ 7 - i ] = new Bit();
             }
-
             value >>= 1;
         }
     }
@@ -37,6 +36,23 @@ public class ByteRegister extends Register {
     }
 
     public String toDecString() {
-        return String.valueOf(Integer.parseInt(toString(), 2));
+        String znak = "";
+        String not_value = "0";
+        String result = "";
+
+        if (value[0].toString().equals("1")) {
+            znak = "-";
+
+            for (int i = 1; i < value.length; i++) {
+                not_value += value[i].toString().equals("1") ? "0" : "1";
+            }
+
+            result = znak + String.valueOf(Integer.parseInt(not_value, 2) + 1);
+        }
+        else {
+            result = znak + String.valueOf(Integer.parseInt(toString(), 2));
+        }
+
+        return result;
     }
 }

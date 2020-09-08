@@ -36,17 +36,18 @@ public class Summator {
 
     private static Register toTwosComplement(Register value) {
         Register vR = null;
-        int v;
+        int v = 0;
 
         if (value instanceof ByteRegister) {
             vR = (ByteRegister) value;
+            v = (byte)Integer.parseInt(vR.toDecString(), 10);
         }
         else if (value instanceof IntRegister) {
             vR = (IntRegister) value;
+            v = Integer.parseInt(vR.toDecString(), 10);
         }
 
         assert vR != null;
-        v = Integer.parseInt(vR.toDecString(), 10);
         vR.init(~v);
         Counter.inc(vR);
 

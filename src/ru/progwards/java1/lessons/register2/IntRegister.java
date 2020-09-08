@@ -47,7 +47,7 @@ public class IntRegister extends Register {
         if (value[0].toString().equals("1")) {
             znak = "-";
 
-            for (int i = 1; i < 32; i++) {
+            for (int i = 1; i < value.length; i++) {
                 not_value += value[i].toString().equals("1") ? "0" : "1";
             }
 
