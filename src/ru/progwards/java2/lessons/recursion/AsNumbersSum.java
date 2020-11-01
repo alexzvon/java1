@@ -90,6 +90,20 @@ public class AsNumbersSum implements Comparator<List<Integer>>{
     public static void main(String[] args) {
         int number = 7;
 
-        System.out.println(asNumbersSum(number));
+        System.out.println(numberSum(number, number, ""));
+    }
+
+    private static String numberSum ( int usedNum, int sum, String prefix) {
+        if (sum == 0) return prefix;
+        int d;
+        if (usedNum < sum) {
+            d = usedNum;
+        } else d = sum;
+        String s = numberSum(d, sum - d, (prefix.isBlank()) ? "" + d : prefix + "+" + d);
+        if (d > 1) {
+            s = s + " = " + numberSum(d - 1, sum, prefix);
+        }
+
+        return s;
     }
 }

@@ -3,7 +3,7 @@ package ru.progwards.java2.lessons.generics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FruitBox<E extends Fruit> extends ArrayList<E> implements Comparable<List<E>> {
+public class FruitBox<E extends Fruit> extends ArrayList<E> implements Comparable<FruitBox> {
 
     /**
      *
@@ -66,11 +66,43 @@ public class FruitBox<E extends Fruit> extends ArrayList<E> implements Comparabl
      * @return
      */
     @Override
-    public int compareTo(List<E> box) {
+    public int compareTo(FruitBox box) {
         if ( !box.isEmpty() ) {
-            return Float.compare(get(0).getWeight() * size(), box.get(0).getWeight() * box.size() );
+            return Float.compare( getWeight(), box.getWeight() );
         }
 
         return 0;
+    }
+
+    public static void main(String[] args) {
+        FruitBox<Apple> af = new FruitBox<>();
+        FruitBox<Orange> of = new FruitBox<>();
+
+//        FruitBox<Fruit> af = new FruitBox<>();
+//        FruitBox<Fruit> of = new FruitBox<>();
+
+        Apple apple = new Apple();
+        Orange orange = new Orange();
+
+        af.add(apple);
+        af.add(apple);
+        af.add(apple);
+        af.add(apple);
+        af.add(apple);
+        af.add(apple);
+        af.add(apple);
+        af.add(apple);
+
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+        of.add(orange);
+
+        System.out.println(af.compareTo(of));
     }
 }
