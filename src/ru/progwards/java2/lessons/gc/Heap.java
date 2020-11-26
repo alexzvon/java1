@@ -25,23 +25,21 @@ public class Heap {
     }
 
     public void compact() {
-        HashMap<Integer, Integer> hb = new HashMap<>();
-        List<Integer> lb = new ArrayList<>();
         AtomicInteger busy = new AtomicInteger();
 
-        this.lb.stream().sorted(Integer::compareTo).reduce(-1, (o1, o2) -> {
+        lb.stream().sorted(Integer::compareTo).reduce(-1, (o1, o2) -> {
             if ( o1 == -1 ) {
                 if ( o2 == 0 ) {
-                    int size = this.hb.get(o2);
-                    lb.add(0);
+                    int size = hb.get(o2);
                     hb.put(0, size);
                     busy.addAndGet(size);
                     return o2;
                 }
                 else {
-                    int size = this.hb.get(o2);
+                    int size = hb.get(o2);
                     copy_block(o2, 0, size);
-                    lb.add(0);
+                    lb.remove(o2);
+                    hb.remove(o2);
                     hb.put(0, size);
                     busy.addAndGet(size);
                     return 0;
@@ -49,41 +47,34 @@ public class Heap {
             }
             else {
                 int size_o1 = hb.get(o1);
-                int size_o2 = this.hb.get(o2);
-                int lb_o1 = o1 + size_o1;
-                copy_block(o2, lb_o1, size_o2);
-                lb.add(lb_o1);
-                hb.put(lb_o1, size_o2);
+                int size_o2 = hb.get(o2);
+                int start_o2 = o1 + size_o1;
+                copy_block(o2, start_o2, size_o2);
+                lb.remove(o2);
+                hb.remove(o2);
+                lb.add(start_o2);
+                hb.put(start_o2, size_o2);
                 busy.addAndGet(size_o2);
-                return lb_o1;
+                return start_o2;
             }
         });
 
-        this.hb.clear();
-        this.hb.putAll(hb);
-        this.lb.clear();
-        this.lb.addAll(lb);
-
         fb.clear();
         fb.add(busy.get());
-        this.hb.put(busy.get(), mhs - busy.get());
+        hb.put(busy.get(), mhs - busy.get());
     }
 
     public void defrag() {
-        List<Integer> d = new ArrayList<>();
-
         fb.stream().sorted(Integer::compareTo).reduce((o1, o2) -> {
             if ( o1 + hb.get(o1) == o2 ) {
                 hb.put(o1, hb.get(o1) + hb.get(o2));
                 hb.remove(o2);
-                d.add(o2);
+                fb.remove(o2);
                 return o1;
             }
 
             return o2;
         });
-
-        fb.removeAll(d);
     }
 
     public void free(int ptr) throws InvalidPointerException {
@@ -102,7 +93,7 @@ public class Heap {
         boolean compact = true;
 
         do {
-            Integer result = fb.stream().reduce((o1, o2) -> {
+            Integer result = fb.stream().reduce((o1, o2)->{
                 int r1 = hb.get(o1) - size;
                 int r2 = hb.get(o2) - size;
 
@@ -112,7 +103,7 @@ public class Heap {
                 if (r1 < r2) return o1;
                 else return o2;
 
-            }).orElse(null);
+            }).orElse(-1);
 
             if ( hb.get(result) != null ) {
                 if (hb.get(result).equals(size)) {

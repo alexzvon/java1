@@ -6,8 +6,8 @@ import java.util.ArrayDeque;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HeapTest {
-//    static final int maxSize = 1932735283;
-    static final int maxSize = 1232735283;
+    static final int maxSize = 1932735283;
+//    static final int maxSize = 1232735283;
     static final int maxSmall = 10;
     static final int maxMedium = 100;
     static final int maxBig = 1000;
